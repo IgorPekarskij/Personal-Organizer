@@ -1,4 +1,4 @@
-package sample;
+package start;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,11 +10,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../fxmls/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../fxmls/loginWindow.fxml"));
         primaryStage.setTitle("Organizer");
-        primaryStage.setMinHeight(230);
-        primaryStage.setMinWidth(610);
-        primaryStage.setScene(new Scene(root, 220, 275));
+        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(root, 450, 180));
         primaryStage.show();
     }
 
