@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<GridPane prefHeight="157.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="190.0" maxWidth="645.0" minHeight="190.0" minWidth="645.0" prefHeight="190.0" prefWidth="645.0" styleClass="background" stylesheets="@../css/ControllsStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -14,7 +14,11 @@
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Label layoutX="238.0" layoutY="107.0" text="Вы успешно зарегестрированны! Добро пожаловать!" />
-      <Button layoutX="225.0" layoutY="175.0" minHeight="30.0" minWidth="65.0" mnemonicParsing="false" text="Ок" GridPane.rowIndex="1" />
+      <Label layoutX="238.0" layoutY="107.0" styleClass="greetingLabel" stylesheets="@../css/ControllsStyle.css" text="Вы успешно зарегестрированны! Добро пожаловать!" />
+      <Button defaultButton="true" layoutX="225.0" layoutY="175.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Ок" GridPane.rowIndex="1">
+         <styleClass>
+            <String fx:value="commonButtonStyle" />
+            <String fx:value="confirmButton" />
+         </styleClass></Button>
    </children>
 </GridPane>
