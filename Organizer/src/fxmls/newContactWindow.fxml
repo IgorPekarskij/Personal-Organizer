@@ -7,8 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="910.0" prefWidth="1164.0" styleClass="background" stylesheets="@Course_project/Organizer/src/css/ControllsStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="900.0" maxWidth="1200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" styleClass="background" stylesheets="@../css/ControllsStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane layoutX="82.0" layoutY="120.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -53,18 +52,18 @@
          <bottom>
             <HBox>
                <children>
-                  <Label prefHeight="15.0" prefWidth="204.0" styleClass="statusLabel" text="Новый контак" BorderPane.alignment="CENTER" />
+                  <Label prefHeight="15.0" prefWidth="204.0" text="Новый контак" BorderPane.alignment="CENTER" />
                </children>
             </HBox>
          </bottom>
          <center>
-            <SplitPane dividerPositions="0.08101851851851852" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+            <SplitPane dividerPositions="0.07708779443254818" orientation="VERTICAL" prefHeight="70.0" prefWidth="160.0" BorderPane.alignment="CENTER">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="94.0" prefWidth="1162.0">
                      <children>
-                        <HBox alignment="CENTER" layoutX="265.0" layoutY="21.0" prefHeight="66.0" prefWidth="1162.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox alignment="CENTER" layoutX="265.0" layoutY="21.0" maxHeight="70.0" prefHeight="70.0" prefWidth="1162.0" styleClass="background" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button layoutX="265.0" layoutY="21.0" mnemonicParsing="false" text="Сохранить">
+                              <Button fx:id="saveNewUserButton" layoutX="265.0" layoutY="21.0" mnemonicParsing="false" text="Сохранить">
                                  <styleClass>
                                     <String fx:value="commonButtonStyle" />
                                     <String fx:value="confirmButton" />
@@ -76,7 +75,7 @@
                                     <DropShadow />
                                  </effect>
                               </Button>
-                              <Button layoutX="493.0" layoutY="21.0" mnemonicParsing="false" text="Отмена">
+                              <Button fx:id="cancelNewUserButton" layoutX="493.0" layoutY="21.0" mnemonicParsing="false" text="Отмена">
                                  <styleClass>
                                     <String fx:value="commonButtonStyle" />
                                     <String fx:value="confirmButton" />
@@ -88,7 +87,7 @@
                                     <DropShadow />
                                  </effect>
                               </Button>
-                              <Button layoutX="793.0" layoutY="21.0" mnemonicParsing="false" text="Очистить">
+                              <Button fx:id="clearNewUserFieldButton" layoutX="793.0" layoutY="21.0" mnemonicParsing="false" text="Очистить">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -104,7 +103,7 @@
                         </HBox>
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane minHeight="780.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
                         <SplitPane dividerPositions="0.5888324873096447" layoutX="261.0" layoutY="223.0" orientation="VERTICAL" prefHeight="790.0" prefWidth="1162.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
@@ -125,7 +124,7 @@
                                           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <TextField layoutX="345.0" layoutY="111.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                          <TextField fx:id="phoneNewContacField" layoutX="345.0" layoutY="111.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
@@ -142,12 +141,12 @@
                                                 <String fx:value="newPageLabel" />
                                              </styleClass>
                                           </Label>
-                                          <TextField layoutX="345.0" layoutY="146.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                          <TextField fx:id="emailNewContacField" layoutX="345.0" layoutY="146.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField layoutX="345.0" layoutY="183.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                          <TextField fx:id="addressNewContacField" layoutX="345.0" layoutY="183.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
@@ -193,17 +192,17 @@
                                              <children>
                                                 <Label styleClass="greetingLabel" text="Имя" GridPane.columnIndex="1" />
                                                 <Label styleClass="greetingLabel" text="Отчество" GridPane.columnIndex="2" />
-                                                <TextField GridPane.rowIndex="1">
+                                                <TextField fx:id="surnameNewContacField" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField fx:id="nameNewContacField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                <TextField fx:id="middlnameNewContacField" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                    </GridPane.margin>
@@ -213,14 +212,14 @@
                                           </GridPane>
                                           <HBox prefHeight="42.0" prefWidth="880.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                              <children>
-                                                <DatePicker nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                <DatePicker fx:id="birthdayDataPicker" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                    <HBox.margin>
                                                       <Insets left="5.0" top="15.0" />
                                                    </HBox.margin>
                                                 </DatePicker>
                                              </children>
                                           </HBox>
-                                          <TextArea prefHeight="86.0" prefWidth="880.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                          <TextArea fx:id="noteTextArea" prefHeight="86.0" prefWidth="880.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
@@ -231,31 +230,30 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <SplitPane dividerPositions="0.4775474956822107" layoutX="416.0" layoutY="47.0" prefHeight="320.0" prefWidth="1160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <SplitPane dividerPositions="0.5" layoutX="416.0" layoutY="47.0" prefHeight="320.0" prefWidth="1160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <items>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                          <AnchorPane>
                                              <children>
-                                                <Pane layoutX="75.0" layoutY="37.0" prefHeight="285.0" prefWidth="549.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <children>
-                                                      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                                                   </children>
-                                                </Pane>
+                                                <ImageView fitHeight="315.0" fitWidth="592.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0" />
                                              </children>
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                              <children>
-                                                <HBox alignment="CENTER" layoutX="45.0" layoutY="104.0" prefHeight="285.0" prefWidth="601.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <HBox alignment="CENTER" layoutX="-3.0" layoutY="104.0" prefHeight="316.0" prefWidth="596.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <TextField layoutX="45.0" layoutY="104.0" prefHeight="35.0" prefWidth="278.0">
+                                                      <TextField fx:id="photoPathField" layoutX="45.0" layoutY="104.0" prefHeight="35.0" prefWidth="390.0">
                                                          <HBox.margin>
                                                             <Insets right="20.0" />
                                                          </HBox.margin>
                                                       </TextField>
-                                                      <Button layoutX="279.0" layoutY="104.0" mnemonicParsing="false" text="Открыть">
+                                                      <Button fx:id="photoOpenButton" layoutX="279.0" layoutY="104.0" mnemonicParsing="false" text="Открыть">
                                                          <styleClass>
                                                             <String fx:value="commonButtonStyle" />
                                                             <String fx:value="confirmButton" />
                                                          </styleClass>
+                                                         <effect>
+                                                            <DropShadow />
+                                                         </effect>
                                                       </Button>
                                                    </children>
                                                 </HBox>
