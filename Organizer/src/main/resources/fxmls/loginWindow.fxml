@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<VBox fx:controller="controllers.LoginWindowController" maxHeight="220.0" maxWidth="500.0" minHeight="220.0" minWidth="500.0" prefHeight="220.0" prefWidth="500.0" styleClass="background" stylesheets="@../css/ControllsStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="450.0">
+         <children>
+            <VBox maxWidth="110.0" minHeight="130.0" minWidth="110.0" prefHeight="130.0" prefWidth="110.0">
+               <children>
+                  <Label prefHeight="15.0" prefWidth="137.0" styleClass="labelConfirm" stylesheets="@../css/ControllsStyle.css" text="Имя" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="25.0" top="25.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="confirmButton" stylesheets="@../css/ControllsStyle.css" text="Пароль" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets bottom="25.0" left="30.0" top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox maxWidth="392.0" minHeight="105.0" minWidth="340.0" prefHeight="130.0" prefWidth="392.0">
+               <children>
+                  <TextField fx:id="logonField" maxWidth="365.0" minWidth="365.0" prefWidth="365.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="10.0" right="15.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <PasswordField fx:id="passwordField" alignment="TOP_LEFT" maxWidth="365.0" minWidth="365.0" prefWidth="365.0">
+                     <VBox.margin>
+                        <Insets bottom="25.0" left="10.0" right="10.0" top="15.0" />
+                     </VBox.margin>
+                  </PasswordField>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+      <GridPane alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button fx:id="enterButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" maxHeight="25.0" maxWidth="66.0" minHeight="25.0" minWidth="66.0" mnemonicParsing="false" onAction="#checkCredentials" prefHeight="25.0" prefWidth="66.0" text="Вход" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="confirmButton" />
+                  <String fx:value="commonButtonStyle" />
+               </styleClass>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="111.0" mnemonicParsing="false" onAction="#createNewUser" prefHeight="30.0" prefWidth="126.0" text="Регистрация" GridPane.columnIndex="2" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="registrationButton" />
+                  <String fx:value="commonButtonStyle" />
+               </styleClass>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0" maxWidth="66.0" minHeight="25.0" minWidth="66.0" mnemonicParsing="false" onAction="#exitApplication" prefHeight="25.0" prefWidth="66.0" text="Выход" GridPane.columnIndex="1" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="commonButtonStyle" />
+                  <String fx:value="confirmButton" />
+               </styleClass>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+         </children>
+      </GridPane>
+   </children>
+</VBox>

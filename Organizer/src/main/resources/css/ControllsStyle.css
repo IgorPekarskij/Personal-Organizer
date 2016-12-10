@@ -1,0 +1,79 @@
+.background {
+    -fx-background-color: navajowhite;
+}
+
+.button:pressed {
+    -fx-background-color: blue;
+}
+
+.commonButtonStyle {
+    -fx-border-color: chocolate;
+    -fx-border-width: 2px;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 10px;
+    -fx-background-color: cornflowerblue;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-padding: 5px;
+}
+
+.welcomeWindowButton {
+    -fx-min-height: 60px;
+    -fx-min-width: 190px;
+    -fx-end-margin: 10px;
+    -fx-start-margin: 10px;
+}
+.confirmButton {
+    -fx-pref-height: 40px;
+    -fx-pref-width: 100px;
+    -fx-max-height: 40px;
+    -fx-max-width: 100px;
+    -fx-start-margin: 10px;
+    -fx-end-margin: 10px;
+}
+.registrationButton {
+    -fx-pref-height: 30px;
+    -fx-pref-width: 130px;
+    -fx-max-height: 40px;
+    -fx-max-width: 130px;
+}
+
+.searchTypeButton {
+    -fx-pref-height: 30px;
+    -fx-pref-width: 170px;
+    -fx-max-height: 40px;
+    -fx-max-width: 170px;
+}
+
+.greetingLabel {
+    -fx-font-size: 20px;
+    -fx-start-margin: 10px;
+    -fx-end-margin: 10px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+.statusBarLabel {
+    -fx-start-margin: 3px;
+    -fx-end-margin: 5px;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.newPageLabel {
+    -fx-min-width: 185px;
+    -fx-max-width: 185px;
+    -fx-alignment: bottom-left;
+}
+
+.currentContactLabel {
+    -fx-font-size: 16px;
+    -fx-padding: 3px;
+    -fx-font-weight: bold;
+}
+
+.textAreaCustom{
+    -fx-border-width: 0px;
+    -fx-background-color: lightgray;
+}
