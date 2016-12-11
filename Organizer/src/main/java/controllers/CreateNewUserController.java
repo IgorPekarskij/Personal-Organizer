@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import testData.TestData;
 
 public class CreateNewUserController {
-
     @FXML
     public TextField newUserLoginField;
     @FXML
@@ -21,7 +20,6 @@ public class CreateNewUserController {
     public Button cancelButton;
     @FXML
     public Button registerButton;
-
 
     public void backToLogin(ActionEvent event) {
         Stage newUserStage = (Stage) cancelButton.getScene().getWindow();
