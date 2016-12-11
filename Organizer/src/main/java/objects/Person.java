@@ -87,6 +87,10 @@ public class Person {
         this.personNote = personNote;
     }
 
+    public String getFIO() {
+        return surname + " " + name + " " + middlename;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
