@@ -7,13 +7,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import testData.TestData;
 
 import java.io.IOException;
 
 public class WelcomeWindowController {
-
+    @FXML
+    public Label welcomeLabel;
     @FXML
     private Button createNewTaskButton;
     @FXML
@@ -27,7 +30,10 @@ public class WelcomeWindowController {
     @FXML
     private Button createNewContactButton;
 
-
+    @FXML
+    private void initialize() {
+        welcomeLabel.setText("Добро пожаловать, " + TestData.userName);
+    }
 
     public void exitApplication(ActionEvent event) {
         System.exit(0);
@@ -35,7 +41,6 @@ public class WelcomeWindowController {
 
     public void openNewTask(ActionEvent event) throws IOException{
         Parent newTaskScene = FXMLLoader.load(getClass().getResource("/fxmls/newTaskWindow.fxml"));
-        Stage welcomeScene = (Stage) openNotesWindowButton.getScene().getWindow();
         Stage newTask = new Stage();
         newTask.setTitle("Organizer");
         newTask.setResizable(false);
@@ -47,7 +52,6 @@ public class WelcomeWindowController {
 
     public void openNewNote(ActionEvent event) throws IOException{
         Parent newNoteScene = FXMLLoader.load(getClass().getResource("/fxmls/newNoteWindow.fxml"));
-        Stage welcomeScene = (Stage) openNotesWindowButton.getScene().getWindow();
         Stage newNote = new Stage();
         newNote.setTitle("Organizer");
         newNote.setResizable(false);
@@ -59,7 +63,6 @@ public class WelcomeWindowController {
 
     public void openNewContact(ActionEvent event) throws IOException{
         Parent newContactScene = FXMLLoader.load(getClass().getResource("/fxmls/newContactWindow.fxml"));
-        Stage welcomeScene = (Stage) openNotesWindowButton.getScene().getWindow();
         Stage newContact = new Stage();
         newContact.setTitle("Organizer");
         newContact.setResizable(false);
