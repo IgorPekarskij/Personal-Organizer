@@ -42,7 +42,8 @@ public class ContactsController {
     }
 
     public void deleteContact(ActionEvent event) {
-
+        int selectedIndex = fullListOfContact.getSelectionModel().getSelectedIndex();
+        CollectionContacts.deleteContact(selectedIndex);
     }
 
     private void updateCountLabel(){
