@@ -4,8 +4,6 @@ import interfaces.IContact;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import objects.Person;
-import testData.TestData;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,12 +17,12 @@ public class CollectionContacts implements IContact {
     private String birthday;
     private String personNote;
 //------------------------------------------------------------
-    private ObservableList<Person> personsList;
-      public CollectionContacts() {
+    private static ObservableList<Person> personsList;
+    public CollectionContacts() {
         personsList = FXCollections.observableArrayList();
     }
 
-    public void addContact(Person person) {
+    public static void addContact(Person person) {
         personsList.add(person);
     }
 
@@ -32,7 +30,7 @@ public class CollectionContacts implements IContact {
 
     }
 
-    public void deleteContact(Person person) {
+    public static void deleteContact(int person) {
         personsList.remove(person);
     }
 
