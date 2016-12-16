@@ -5,5 +5,5 @@ import objects.Person;
 public interface IContact {
     static void addContact (Person person){};
     void updateContact (Person person);
-    static void deleteContact (int person){};
+    static void deleteContact (Person person){};
 }
