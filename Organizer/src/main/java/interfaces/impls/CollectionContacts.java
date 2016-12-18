@@ -16,11 +16,7 @@ public class CollectionContacts implements IContact {
     private String address;
     private String birthday;
     private String personNote;
-//------------------------------------------------------------
-    private static ObservableList<Person> personsList;
-    public CollectionContacts() {
-        personsList = FXCollections.observableArrayList();
-    }
+    private static ObservableList<Person> personsList = FXCollections.observableArrayList();
 
     public static void addContact(Person person) {
         personsList.add(person);
@@ -30,12 +26,12 @@ public class CollectionContacts implements IContact {
 
     }
 
-    public static void deleteContact(int person) {
+    public static void deleteContact(Person person) {
         personsList.remove(person);
     }
 
     public void fillList(){
-        SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd");
+        SimpleDateFormat date = new SimpleDateFormat("dd.MM.yyyy");
         for (int i = 1; i <= 10; i++) {
             surname = "Petrov" + i;
             name = "Ivan" + i;
@@ -45,15 +41,16 @@ public class CollectionContacts implements IContact {
             address = "Brest, Kirova, " + i;
             birthday = date.format(new Date(System.currentTimeMillis()));
             personNote = "Test" + i;
-            personsList.add(new Person(surname, name, middlename, phoneNumber, email, address, birthday, personNote));
+            personsList.add(new Person(i, surname, name, middlename, phoneNumber, email, address, birthday, personNote));
         }
     }
 
-    public ObservableList<Person> getPersonsList() {
+    public static ObservableList<Person> getPersonsList() {
         return personsList;
     }
 
     public void setPersonsList(ObservableList<Person> personsList) {
         this.personsList = personsList;
     }
+
 }
