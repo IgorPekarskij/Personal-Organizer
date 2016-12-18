@@ -1,9 +1,11 @@
 package objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Note {
+    private SimpleIntegerProperty noteID;
     private SimpleStringProperty name = new SimpleStringProperty("");
     private SimpleStringProperty description = new SimpleStringProperty("");
     private SimpleStringProperty noteDate = new SimpleStringProperty("");
@@ -12,7 +14,9 @@ public class Note {
     public Note() {
     }
 
-    public Note(SimpleStringProperty name, SimpleStringProperty description, SimpleStringProperty noteDate, SimpleObjectProperty personImage) {
+    public Note(SimpleIntegerProperty noteId, SimpleStringProperty name, SimpleStringProperty description, SimpleStringProperty noteDate,
+                SimpleObjectProperty personImage) {
+        this.noteID = noteId;
         this.name = name;
         this.description = description;
         this.noteDate = noteDate;
@@ -65,6 +69,18 @@ public class Note {
 
     public void setPersonImage(Object personImage) {
         this.personImage.set(personImage);
+    }
+
+    public int getNoteID() {
+        return noteID.get();
+    }
+
+    public void setNoteID(int noteID) {
+        this.noteID.set(noteID);
+    }
+
+    public SimpleIntegerProperty noteIDProperty() {
+        return noteID;
     }
 
     @Override
