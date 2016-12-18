@@ -26,37 +26,14 @@
          <top>
             <MenuBar BorderPane.alignment="CENTER">
               <menus>
-                <Menu mnemonicParsing="false" text="Файл">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Выход" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                  <Menu mnemonicParsing="false" text="Контакты">
+                  <Menu mnemonicParsing="false" text="Файл">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Список контактов" />
-                        <MenuItem mnemonicParsing="false" text="Новый контакт" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Задачи">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Список задач" />
-                        <MenuItem mnemonicParsing="false" text="Новая задача" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Заметки">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Список заметок" />
-                        <MenuItem mnemonicParsing="false" text="Новая заметка" />
+                        <MenuItem mnemonicParsing="false" text="Выйти" />
                      </items>
                   </Menu>
                 <Menu mnemonicParsing="false" text="Помощь">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem mnemonicParsing="false" text="О программе" />
                   </items>
                 </Menu>
               </menus>
@@ -76,7 +53,7 @@
                      <children>
                         <HBox alignment="CENTER" layoutX="265.0" layoutY="21.0" maxHeight="70.0" minHeight="70.0" prefHeight="70.0" prefWidth="1198.0" styleClass="background" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button fx:id="saveNewUserButton" layoutX="265.0" layoutY="21.0" mnemonicParsing="false" onAction="#createNewUser" text="Сохранить">
+                              <Button fx:id="saveNewUserButton" defaultButton="true" layoutX="265.0" layoutY="21.0" mnemonicParsing="false" onAction="#saveUser" text="Сохранить">
                                  <styleClass>
                                     <String fx:value="commonButtonStyle" />
                                     <String fx:value="confirmButton" />
@@ -88,7 +65,7 @@
                                     <DropShadow />
                                  </effect>
                               </Button>
-                              <Button fx:id="cancelNewUserButton" layoutX="493.0" layoutY="21.0" mnemonicParsing="false" onAction="#closeNewUserWindow" text="Отмена">
+                              <Button fx:id="cancelNewUserButton" cancelButton="true" layoutX="493.0" layoutY="21.0" mnemonicParsing="false" onAction="#cancelNewUserWindow" text="Отмена">
                                  <styleClass>
                                     <String fx:value="commonButtonStyle" />
                                     <String fx:value="confirmButton" />
@@ -111,6 +88,18 @@
                                     <String fx:value="commonButtonStyle" />
                                     <String fx:value="confirmButton" />
                                  </styleClass>
+                              </Button>
+                              <Button fx:id="photoOpenButton" mnemonicParsing="false" onAction="#addPhotoButton" text="Открыть">
+                                 <styleClass>
+                                    <String fx:value="commonButtonStyle" />
+                                    <String fx:value="confirmButton" />
+                                 </styleClass>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
                               </Button>
                            </children>
                         </HBox>
@@ -243,27 +232,14 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <SplitPane dividerPositions="0.5150753768844221" layoutX="416.0" layoutY="47.0" prefHeight="320.0" prefWidth="1160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <SplitPane dividerPositions="0.38023450586264657" layoutX="416.0" layoutY="47.0" prefHeight="320.0" prefWidth="1160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <items>
-                                          <AnchorPane>
+                                          <AnchorPane maxWidth="500.0" prefHeight="318.0" prefWidth="500.0">
                                              <children>
-                                                <ImageView fitHeight="315.0" fitWidth="592.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <ImageView fx:id="personImage" fitHeight="322.0" fitWidth="450.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                              </children>
                                           </AnchorPane>
-                                        <AnchorPane maxWidth="590.0" minHeight="0.0" minWidth="590.0" prefHeight="160.0" prefWidth="590.0" styleClass="background">
-                                             <children>
-                                                <TextField fx:id="photoPathField" layoutX="23.0" layoutY="123.0" prefHeight="33.0" prefWidth="405.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="162.0" />
-                                                <Button fx:id="photoOpenButton" layoutX="434.0" layoutY="118.0" mnemonicParsing="false" text="Открыть" AnchorPane.rightAnchor="41.0">
-                                                   <styleClass>
-                                                      <String fx:value="commonButtonStyle" />
-                                                      <String fx:value="confirmButton" />
-                                                   </styleClass>
-                                                   <effect>
-                                                      <DropShadow />
-                                                   </effect>
-                                                </Button>
-                                             </children>
-                                          </AnchorPane>
+                                        <AnchorPane maxWidth="966.0" minHeight="0.0" minWidth="590.0" prefHeight="318.0" prefWidth="712.0" styleClass="background" />
                                       </items>
                                     </SplitPane>
                                  </children>
