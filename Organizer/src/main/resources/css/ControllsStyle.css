@@ -26,9 +26,9 @@
 }
 .confirmButton {
     -fx-pref-height: 40px;
-    -fx-pref-width: 100px;
+    -fx-pref-width: 115px;
     -fx-max-height: 40px;
-    -fx-max-width: 100px;
+    -fx-max-width: 115px;
     -fx-start-margin: 10px;
     -fx-end-margin: 10px;
 }
