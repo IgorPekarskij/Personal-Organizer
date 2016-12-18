@@ -3,24 +3,48 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import testData.TestData;
+import testData.User;
 
 import java.io.IOException;
 
 public class LoginWindowController {
     @FXML
-    public TextField loginField;
+    private TextField loginField;
     @FXML
-    public PasswordField passwordField;
+    private PasswordField passwordField;
+    @FXML
+    private Button exitButton;
+    @FXML
+    private HBox loginWindowButtonsPane;
+    @FXML
+    private Button registerButton;
     @FXML
     private Button enterButton;
+    @FXML
+    private void initialize () {
+        User user = TestData.getUser();
+        if (user != null) {
+            hideRegistrationButton();
+        } else {
+            enterButton.setDisable(true);
+        }
+    }
 
+    private void hideRegistrationButton() {
+        registerButton.setVisible(false);
+        loginWindowButtonsPane.setPadding(new Insets(10, 10, 10, 110));
+        enterButton.setMinWidth(115);
+        exitButton.setMinWidth(115);
+    }
 
     public void exitApplication(ActionEvent event) {
         System.exit(0);
@@ -34,14 +58,16 @@ public class LoginWindowController {
         newUser.initModality(Modality.WINDOW_MODAL);
         newUser.initOwner(((Node) event.getSource()).getScene().getWindow());
         newUser.setScene(new Scene(registerUser));
-        newUser.show();
-
-
+        newUser.showAndWait();
+        User user = TestData.getUser();
+        if (user != null) {
+            enterButton.setDisable(false);
+            hideRegistrationButton();
+        }
     }
 
     public void checkCredentials(ActionEvent event) throws IOException{
-
-        if(loginField.getText().equals(TestData.login) && passwordField.getText().equals(TestData.password)) {
+        if(loginField.getText().equals(TestData.getUser().getLogin()) && passwordField.getText().equals(TestData.getUser().getPassword())) {
             Parent welcomeScene = FXMLLoader.load(getClass().getResource("/fxmls/welcomeWindow.fxml"));
             Stage loginStage = (Stage) enterButton.getScene().getWindow();
             loginStage.close();
