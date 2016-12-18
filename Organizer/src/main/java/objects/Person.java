@@ -1,5 +1,6 @@
 package objects;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Person {
@@ -12,7 +13,7 @@ public class Person {
     private SimpleStringProperty address = new SimpleStringProperty("");
     private SimpleStringProperty birthday = new SimpleStringProperty("");
     private SimpleStringProperty personNote = new SimpleStringProperty("");
-
+    private SimpleObjectProperty personImage = new SimpleObjectProperty(new byte[0]);
     public Person() {
     }
 
@@ -98,6 +99,20 @@ public class Person {
 
     public void setPersonNote(String personNote) {
         this.personNote.set(personNote);
+    }
+
+    public Object getPersonImage() {
+        return personImage.get();
+    }
+
+    public SimpleObjectProperty personImageProperty() {
+        return personImage;
+    }
+
+    public void setPersonImage(Object personImage) {
+        if (personImage instanceof byte[]) {
+            this.personImage.set(personImage);
+        }
     }
 
     public SimpleStringProperty surnameProperty() {
