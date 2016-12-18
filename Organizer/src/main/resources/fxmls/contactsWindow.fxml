@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="750.0" minWidth="1000.0" prefHeight="880.0" prefWidth="1200.0" styleClass="background" stylesheets="@../css/ControllsStyle.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ContactsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="1100.0" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@../css/ControllsStyle.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ContactsController">
    <children>
       <BorderPane prefHeight="921.0" prefWidth="1213.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -184,16 +184,16 @@
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
-                                                <SplitPane dividerPositions="0.6465295629820051" layoutX="95.0" layoutY="29.0" prefHeight="394.0" prefWidth="843.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <SplitPane dividerPositions="0.7064606741573034" layoutX="95.0" layoutY="29.0" prefHeight="394.0" prefWidth="843.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <items>
-                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                    <AnchorPane maxHeight="337.0" maxWidth="450.0" minHeight="304.0" minWidth="450.0" prefHeight="304.0" prefWidth="450.0">
                                                          <children>
-                                                            <ImageView fx:id="contactImage" fitHeight="375.0" fitWidth="500.0" layoutX="2.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0" />
+                                                            <ImageView fx:id="contactImage" fitHeight="300.0" fitWidth="450.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="2.0" />
                                                          </children>
                                                       </AnchorPane>
                                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="283.0">
                                                          <children>
-                                                            <VBox alignment="CENTER" layoutX="43.0" layoutY="14.0" prefHeight="378.0" prefWidth="296.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <VBox alignment="CENTER" layoutX="43.0" layoutY="14.0" maxHeight="337.0" maxWidth="271.0" minHeight="337.0" minWidth="271.0" prefHeight="337.0" prefWidth="271.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                <children>
                                                                   <Button fx:id="newContactButton" layoutX="132.0" layoutY="62.0" mnemonicParsing="false" onAction="#createNewContact" text="Новый контакт">
                                                                      <VBox.margin>
