@@ -53,7 +53,7 @@
                      <children>
                         <HBox alignment="CENTER" layoutX="265.0" layoutY="21.0" maxHeight="70.0" minHeight="70.0" prefHeight="70.0" prefWidth="1198.0" styleClass="background" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button fx:id="saveNewUserButton" defaultButton="true" layoutX="265.0" layoutY="21.0" mnemonicParsing="false" onAction="#saveUser" text="Сохранить">
+                              <Button fx:id="saveNewContactButton" defaultButton="true" layoutX="265.0" layoutY="21.0" mnemonicParsing="false" onAction="#saveContact" text="Сохранить">
                                  <styleClass>
                                     <String fx:value="commonButtonStyle" />
                                     <String fx:value="confirmButton" />
@@ -65,7 +65,7 @@
                                     <DropShadow />
                                  </effect>
                               </Button>
-                              <Button fx:id="cancelNewUserButton" cancelButton="true" layoutX="493.0" layoutY="21.0" mnemonicParsing="false" onAction="#cancelNewUserWindow" text="Отмена">
+                              <Button fx:id="cancelSaveUserButton" cancelButton="true" layoutX="493.0" layoutY="21.0" mnemonicParsing="false" onAction="#cancelSaveContact" text="Отмена">
                                  <styleClass>
                                     <String fx:value="commonButtonStyle" />
                                     <String fx:value="confirmButton" />
@@ -77,7 +77,7 @@
                                     <DropShadow />
                                  </effect>
                               </Button>
-                              <Button fx:id="clearNewUserFieldButton" layoutX="793.0" layoutY="21.0" mnemonicParsing="false" onAction="#clearFields" text="Очистить">
+                              <Button fx:id="clearContactFieldButton" layoutX="793.0" layoutY="21.0" mnemonicParsing="false" onAction="#clearFields" text="Очистить">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>
