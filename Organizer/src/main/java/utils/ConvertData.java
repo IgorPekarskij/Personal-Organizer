@@ -33,7 +33,7 @@ public class ConvertData {
         Image result = null;
         if (source instanceof byte[]) {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream((byte[])source);
-            result = new Image(byteArrayInputStream, 500, 350, false, false);
+            result = new Image(byteArrayInputStream, 450, 300, false, false);
         }
         return result;
     }
