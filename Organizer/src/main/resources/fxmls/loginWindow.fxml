@@ -7,10 +7,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -57,20 +54,9 @@
             </VBox>
          </children>
       </HBox>
-      <GridPane alignment="CENTER">
-         <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <HBox fx:id="loginWindowButtonsPane" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="enterButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" maxHeight="25.0" maxWidth="66.0" minHeight="25.0" minWidth="66.0" mnemonicParsing="false" onAction="#checkCredentials" prefHeight="25.0" prefWidth="66.0" text="Вход" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
-               </HBox.margin>
+            <Button fx:id="enterButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" maxHeight="25.0" maxWidth="66.0" minHeight="25.0" minWidth="70.0" mnemonicParsing="false" onAction="#checkCredentials" prefHeight="25.0" prefWidth="66.0" text="Вход">
                <styleClass>
                   <String fx:value="confirmButton" />
                   <String fx:value="commonButtonStyle" />
@@ -78,11 +64,23 @@
                <effect>
                   <DropShadow />
                </effect>
-            </Button>
-            <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="111.0" mnemonicParsing="false" onAction="#openRegistrationForm" prefHeight="30.0" prefWidth="126.0" text="Регистрация" GridPane.columnIndex="2" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                </HBox.margin>
+            </Button>
+            <Button fx:id="exitButton" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" maxHeight="25.0" maxWidth="66.0" minHeight="25.0" minWidth="66.0" mnemonicParsing="false" onAction="#exitApplication" prefHeight="25.0" prefWidth="66.0" text="Выход">
+               <styleClass>
+                  <String fx:value="commonButtonStyle" />
+                  <String fx:value="confirmButton" />
+               </styleClass>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <HBox.margin>
+                  <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0" maxWidth="125.0" minHeight="25.0" minWidth="111.0" mnemonicParsing="false" onAction="#openRegistrationForm" prefHeight="30.0" prefWidth="126.0" text="Регистрация">
                <styleClass>
                   <String fx:value="registrationButton" />
                   <String fx:value="commonButtonStyle" />
@@ -90,23 +88,14 @@
                <effect>
                   <DropShadow />
                </effect>
-            </Button>
-            <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0" maxWidth="66.0" minHeight="25.0" minWidth="66.0" mnemonicParsing="false" onAction="#exitApplication" prefHeight="25.0" prefWidth="66.0" text="Выход" GridPane.columnIndex="1" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                </HBox.margin>
-               <styleClass>
-                  <String fx:value="commonButtonStyle" />
-                  <String fx:value="confirmButton" />
-               </styleClass>
-               <effect>
-                  <DropShadow />
-               </effect>
             </Button>
          </children>
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </GridPane>
+         <padding>
+            <Insets bottom="10.0" left="30.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
    </children>
 </VBox>
