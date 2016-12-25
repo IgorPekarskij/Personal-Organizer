@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import testData.TestData;
+import objects.User;
 
 public class CreateNewUserController {
     @FXML
@@ -27,9 +28,7 @@ public class CreateNewUserController {
     }
 
     public void createNewUser(ActionEvent event) {
-        TestData.login = newUserLoginField.getText();
-        TestData.password = newUserPasswordField.getText();
-        TestData.userName = newUserNameFiled.getText();
+        TestData.setUser(new User(newUserLoginField.getText(), newUserPasswordField.getText(), newUserNameFiled.getText()));
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Organizer");
         alert.getDialogPane().setPrefWidth(500);
