@@ -16,11 +16,7 @@ import java.io.IOException;
 
 public class WelcomeWindowController {
     @FXML
-    public Label welcomeLabel;
-    @FXML
-    private Button createNewTaskButton;
-    @FXML
-    private Button createNewNoteButton;
+    private Label welcomeLabel;
     @FXML
     private Button openContactsWindowButton;
     @FXML
@@ -28,15 +24,12 @@ public class WelcomeWindowController {
     @FXML
     private Button openTasksWindowButton;
     @FXML
-    private Button createNewContactButton;
-
-    @FXML
     private void initialize() {
-        welcomeLabel.setText("Добро пожаловать, " + TestData.userName);
+        welcomeLabel.setText("Добро пожаловать, " + TestData.getUser().getUserName());
     }
 
     public void exitApplication(ActionEvent event) {
-        System.exit(0);
+        LoginWindowController.exitApplication();
     }
 
     public void openNewTask(ActionEvent event) throws IOException{
@@ -69,36 +62,30 @@ public class WelcomeWindowController {
         newContact.setScene(new Scene(newContactScene));
         newContact.initModality(Modality.WINDOW_MODAL);
         newContact.initOwner(((Node) event.getSource()).getScene().getWindow());
-        newContact.show();
+        newContact.showAndWait();
     }
 
     public void openNotes(ActionEvent event) throws IOException {
-        Parent notesScene = FXMLLoader.load(getClass().getResource("/fxmls/notesWindow.fxml"));
-        Stage welcomeScene = (Stage) openNotesWindowButton.getScene().getWindow();
-        welcomeScene.close();
-        Stage notesStage = new Stage();
-        notesStage.setTitle("Organizer");
-        notesStage.setScene(new Scene(notesScene));
-        notesStage.show();
+        Parent welcomeScene = FXMLLoader.load(getClass().getResource("/fxmls/notesWindow.fxml"));
+        openNewWindow(openNotesWindowButton, welcomeScene);
     }
 
     public void openTasks(ActionEvent event) throws IOException{
-        Parent tasksScene = FXMLLoader.load(getClass().getResource("/fxmls/tasksWindow.fxml"));
-        Stage welcomeScene = (Stage) openTasksWindowButton.getScene().getWindow();
-        welcomeScene.close();
-        Stage tasksStage = new Stage();
-        tasksStage.setTitle("Organizer");
-        tasksStage.setScene(new Scene(tasksScene));
-        tasksStage.show();
+        Parent welcomeScene = FXMLLoader.load(getClass().getResource("/fxmls/tasksWindow.fxml"));
+        openNewWindow(openTasksWindowButton, welcomeScene);
     }
 
     public void openContacts(ActionEvent event) throws IOException{
-        Parent contactsScene = FXMLLoader.load(getClass().getResource("/fxmls/contactsWindow.fxml"));
-        Stage loginStage = (Stage) openContactsWindowButton.getScene().getWindow();
-        loginStage.close();
+        Parent welcomeScene = FXMLLoader.load(getClass().getResource("/fxmls/contactsWindow.fxml"));
+        openNewWindow(openContactsWindowButton, welcomeScene);
+    }
+
+    public static void openNewWindow(Node button, Parent scene) throws IOException {
+        Stage welcomeStage = (Stage) button.getScene().getWindow();
         Stage contactsStage = new Stage();
         contactsStage.setTitle("Organizer");
-        contactsStage.setScene(new Scene(contactsScene));
+        contactsStage.setScene(new Scene(scene));
         contactsStage.show();
+        welcomeStage.close();
     }
 }
