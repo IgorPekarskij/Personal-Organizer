@@ -4,6 +4,7 @@ import interfaces.impls.CollectionContacts;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -43,6 +44,7 @@ public class CreateNewContactController {
     public Person getNewPerson() {
         return newPerson;
     }
+
     public void setPerson(Person person) {
         if (person != null) {
             this.newPerson = person;
@@ -54,13 +56,15 @@ public class CreateNewContactController {
             addressNewContactField.setText(newPerson.getAddress());
             noteTextArea.setText(newPerson.getPersonNote());
             birthdayDataPicker.setValue(ConvertData.convertStringToLocalDate(newPerson.getBirthday()));
-            personImage.setImage(ConvertData.convertToImage(newPerson.getPersonImage()));
+            if(newPerson.getPersonImage() != null) {
+                personImage.setImage(ConvertData.convertToImage(newPerson.getPersonImage()));
+            }
         }
     }
 
     public void saveContact(ActionEvent event) {
         //Исправить после подключения БД
-        this.newPerson.setPersonID(CollectionContacts.getPersonsList().size());
+        this.newPerson.setPersonID(CollectionContacts.getPersonsList().get(CollectionContacts.getPersonsList().size()-1).getPersonID()+1);
         //--------
         this.newPerson.setSurname(surnameNewContactField.getText() == null ? " " : surnameNewContactField.getText());
         this.newPerson.setName(nameNewContactField.getText() == null ? " " : nameNewContactField.getText());
@@ -71,18 +75,18 @@ public class CreateNewContactController {
         this.newPerson.setBirthday(birthdayDataPicker.getValue() == null ? " " : ConvertData.convertLocalDateToString(birthdayDataPicker.getValue()));
         this.newPerson.setPersonNote(noteTextArea.getText() == null ? " " : noteTextArea.getText());
         ContactsController.setAddPerson(true);
-        hideWindow();
+        hideWindow(cancelSaveUserButton);
     }
 
     public void cancelSaveContact(ActionEvent event) {
         ContactsController.setAddPerson(false);
-        hideWindow();
+        hideWindow(cancelSaveUserButton);
+        clearFields();
     }
 
-    private void hideWindow() {
-        Stage newContactStage = (Stage) cancelSaveUserButton.getScene().getWindow();
-        clearFields();
-        newContactStage.hide();
+    public void hideWindow(Node node) {
+        Stage newStage = (Stage) node.getScene().getWindow();
+        newStage.hide();
     }
 
     public void clearFields() {
