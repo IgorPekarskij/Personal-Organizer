@@ -47,9 +47,9 @@
 }
 
 .greetingLabel {
-    -fx-font-size: 20px;
-    -fx-start-margin: 10px;
-    -fx-end-margin: 10px;
+    -fx-font-size: 16px;
+    -fx-start-margin: 5px;
+    -fx-end-margin: 5px;
     -fx-font-weight: bold;
     -fx-alignment: center;
 }
@@ -62,8 +62,8 @@
 }
 
 .newPageLabel {
-    -fx-min-width: 185px;
-    -fx-max-width: 185px;
+    -fx-min-width: 160px;
+    -fx-max-width: 160px;
     -fx-alignment: bottom-left;
 }
 
