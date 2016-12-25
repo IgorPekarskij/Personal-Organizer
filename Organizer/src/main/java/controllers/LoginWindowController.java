@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import testData.TestData;
-import testData.User;
+import objects.User;
 
 import java.io.IOException;
 
@@ -47,7 +47,7 @@ public class LoginWindowController {
     }
 
     public void exitApplication(ActionEvent event) {
-        System.exit(0);
+        exitApplication();
     }
 
     public void openRegistrationForm(ActionEvent event) throws IOException {
@@ -70,12 +70,12 @@ public class LoginWindowController {
         if(loginField.getText().equals(TestData.getUser().getLogin()) && passwordField.getText().equals(TestData.getUser().getPassword())) {
             Parent welcomeScene = FXMLLoader.load(getClass().getResource("/fxmls/welcomeWindow.fxml"));
             Stage loginStage = (Stage) enterButton.getScene().getWindow();
-            loginStage.close();
             Stage root = new Stage();
             root.setTitle("Organizer");
             root.setResizable(false);
             root.setScene(new Scene(welcomeScene, 650, 465));
             root.show();
+            loginStage.close();
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -84,6 +84,18 @@ public class LoginWindowController {
             alert.getDialogPane().setPrefWidth(500);
             alert.setContentText("Введите верные данные или зарегистрируйтесь!");
             alert.showAndWait();
+        }
+    }
+
+    public static void exitApplication(){
+        ButtonType ok = new ButtonType("Да", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("Нет", ButtonBar.ButtonData.NO);
+        Alert confirmExit = new Alert(Alert.AlertType.CONFIRMATION, "Вы хотите закрыть приложение!", ok, no);
+        confirmExit.setHeaderText("");
+        confirmExit.setTitle("Подтверждение!");
+        confirmExit.showAndWait();
+        if(confirmExit.getResult() == ok) {
+            System.exit(0);
         }
     }
 
