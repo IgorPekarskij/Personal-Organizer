@@ -31,7 +31,7 @@ public class ConvertData {
 
     public static Image convertToImage (Object source) {
         Image result = null;
-        if (source instanceof byte[]) {
+        if (source instanceof byte[] && ((byte[]) source).length > 0) {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream((byte[])source);
             result = new Image(byteArrayInputStream, 450, 300, false, false);
         }
