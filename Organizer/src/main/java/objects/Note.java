@@ -5,22 +5,22 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Note {
-    private SimpleIntegerProperty noteID;
+    private SimpleIntegerProperty noteID = new SimpleIntegerProperty();
     private SimpleStringProperty name = new SimpleStringProperty("");
     private SimpleStringProperty description = new SimpleStringProperty("");
     private SimpleStringProperty noteDate = new SimpleStringProperty("");
-    private SimpleObjectProperty personImage = new SimpleObjectProperty(new byte[0]);
+    private SimpleObjectProperty noteImage = new SimpleObjectProperty(new byte[0]);
 
     public Note() {
     }
 
-    public Note(SimpleIntegerProperty noteId, SimpleStringProperty name, SimpleStringProperty description, SimpleStringProperty noteDate,
-                SimpleObjectProperty personImage) {
-        this.noteID = noteId;
-        this.name = name;
-        this.description = description;
-        this.noteDate = noteDate;
-        this.personImage = personImage;
+    public Note(int noteId, String name, String description, String noteDate,
+                byte[] personImage) {
+        this.noteID = new SimpleIntegerProperty(noteId);
+        this.name = new SimpleStringProperty (name);
+        this.description = new SimpleStringProperty (description);
+        this.noteDate = new SimpleStringProperty (noteDate);
+        this.noteImage = new SimpleObjectProperty(personImage);
     }
 
     public String getName() {
@@ -59,16 +59,16 @@ public class Note {
         this.noteDate.set(noteDate);
     }
 
-    public Object getPersonImage() {
-        return personImage.get();
+    public Object getNoteImage() {
+        return noteImage.get();
     }
 
-    public SimpleObjectProperty personImageProperty() {
-        return personImage;
+    public SimpleObjectProperty noteImageProperty() {
+        return noteImage;
     }
 
-    public void setPersonImage(Object personImage) {
-        this.personImage.set(personImage);
+    public void setNoteImage(Object noteImage) {
+        this.noteImage.set(noteImage);
     }
 
     public int getNoteID() {
@@ -93,7 +93,7 @@ public class Note {
         if (name != null ? !name.equals(note.name) : note.name != null) return false;
         if (description != null ? !description.equals(note.description) : note.description != null) return false;
         if (noteDate != null ? !noteDate.equals(note.noteDate) : note.noteDate != null) return false;
-        return personImage != null ? personImage.equals(note.personImage) : note.personImage == null;
+        return noteImage != null ? noteImage.equals(note.noteImage) : note.noteImage == null;
 
     }
 
@@ -102,7 +102,7 @@ public class Note {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (noteDate != null ? noteDate.hashCode() : 0);
-        result = 31 * result + (personImage != null ? personImage.hashCode() : 0);
+        result = 31 * result + (noteImage != null ? noteImage.hashCode() : 0);
         return result;
     }
 
@@ -112,7 +112,7 @@ public class Note {
                 "name=" + name +
                 ", description=" + description +
                 ", noteDate=" + noteDate +
-                ", personImage=" + personImage +
+                ", noteImage=" + noteImage +
                 '}';
     }
 }
