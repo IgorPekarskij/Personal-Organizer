@@ -14,17 +14,19 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import objects.Note;
+import utils.ConvertData;
+
 import java.io.IOException;
 
 public class NotesWindowController {
-
-    private ContactsController contactsController = new ContactsController();
-    private CollectionNotes collectionNotes = new CollectionNotes();
+    private ContactsWindowController contactsController = new ContactsWindowController();
     private FXMLLoader fxmlLoader;
     private Parent fxmlEdit;
     private CreateNewNoteController createNewNote;
     private Stage editNoteStage;
     private static boolean addNote = true;
+    @FXML
+    private DatePicker selectNoteFromDatePicker;
     @FXML
     private TextField searchNoteTextField;
     @FXML
@@ -40,7 +42,6 @@ public class NotesWindowController {
     private void initialize() {
         dataNoteColumn.setCellValueFactory(new PropertyValueFactory<Note, String>("noteDate"));
         nameNoteColumn.setCellValueFactory(new PropertyValueFactory<Note, String>("name"));
-          //listOfNotes.setItems(collectionContact.getNotesList());
         initListeners();
         initLoader();
         fillData();
@@ -52,14 +53,25 @@ public class NotesWindowController {
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
                 if (note.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches first name.
-                }else if (note.getNoteDate().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (note.getNoteDate().contains(lowerCaseFilter)) {
                     return true;
                 }
-                return false; // Does not match.
+                return false;
             });
-        }) );
-
+        }));
+        selectNoteFromDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filteredNoteList.setPredicate(task -> {
+                if (newValue == null) {
+                    return true;
+                }
+                String dateToString = ConvertData.convertLocalDateToString(newValue);
+                if (task.getNoteDate().contains(dateToString)) {
+                    return true;
+                }
+                return false;
+            });
+        });
         SortedList<Note> sortedList = new SortedList<>(filteredNoteList);
         sortedList.comparatorProperty().bind(listOfNotes.comparatorProperty());
         listOfNotes.setItems(sortedList);
@@ -67,9 +79,10 @@ public class NotesWindowController {
     }
 
     private void fillData() {
-        collectionNotes.fillNoteList();
         listOfNotes.setItems(CollectionNotes.getNotesList());
+        listOfNotes.getSelectionModel().selectFirst();
     }
+
     private void initLoader() {
         try {
             fxmlLoader = new FXMLLoader();
@@ -85,7 +98,7 @@ public class NotesWindowController {
         listOfNotes.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(event.getClickCount() == 2) {
+                if (event.getClickCount() == 2) {
                     createNewNote.setNote((Note) listOfNotes.getSelectionModel().getSelectedItem());
                     editNoteStage = contactsController.showWindow(editNoteStage, listOfNotes, fxmlEdit);
                 }
@@ -95,32 +108,33 @@ public class NotesWindowController {
 
     public void createNewNote(ActionEvent event) throws IOException {
         Object currentEvent = event.getSource();
-        if(!(currentEvent instanceof Button)){
+        if (!(currentEvent instanceof Button)) {
             return;
         }
         Button currentButton = (Button) currentEvent;
         switch (currentButton.getId()) {
-            case "addNewNoteButton" :
-                System.out.println(addNote);
+            case "addNewNoteButton":
+                addNote = true;
                 createNewNote.setNote(new Note());
                 editNoteStage = contactsController.showWindow(editNoteStage, listOfNotes, fxmlEdit);
-                System.out.println(addNote);
                 if (addNote) {
-                    CollectionNotes.addNote(createNewNote.getNewNote());
+                    int id = CollectionNotes.addNote(createNewNote.getNewNote());
+                    createNewNote.getNewNote().setNoteID(id);
                     listOfNotes.getSelectionModel().selectLast();
                 }
                 break;
-            case "editNoteButton" :
+            case "editNoteButton":
                 createNewNote.setNote((Note) listOfNotes.getSelectionModel().getSelectedItem());
                 editNoteStage = contactsController.showWindow(editNoteStage, listOfNotes, fxmlEdit);
                 break;
         }
     }
+
     public void exitApplication(ActionEvent event) throws IOException {
         LoginWindowController.exitApplication();
     }
 
-    public void openContacts(ActionEvent event) throws IOException{
+    public void openContacts(ActionEvent event) throws IOException {
         Parent contactScene = FXMLLoader.load(getClass().getResource("/fxmls/contactsWindow.fxml"));
         WelcomeWindowController.openNewWindow(listOfNotes, contactScene);
     }
@@ -130,28 +144,42 @@ public class NotesWindowController {
         WelcomeWindowController.openNewWindow(listOfNotes, contactScene);
     }
 
-    public void openNotes(ActionEvent event) throws IOException {
-        Parent contactScene = FXMLLoader.load(getClass().getResource("/fxmls/notesWindow.fxml"));
-        WelcomeWindowController.openNewWindow(listOfNotes, contactScene);
-    }
-
-    public void openNewNoteWindow(ActionEvent event) throws IOException{
-        createNewNote(event);
-    }
-
     public void deleteNote(ActionEvent event) {
-        CollectionNotes.deleteNote((Note) listOfNotes.getSelectionModel().getSelectedItem());
+        int rowNumber = listOfNotes.getSelectionModel().getSelectedIndex();
+        if (rowNumber < 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Органайзер");
+            alert.getDialogPane().setPrefWidth(500);
+            alert.setHeaderText("Выберите задачу!");
+            alert.showAndWait();
+        } else {
+            ButtonType ok = new ButtonType("Да", ButtonBar.ButtonData.YES);
+            ButtonType no = new ButtonType("Нет", ButtonBar.ButtonData.NO);
+            Alert confirmExit = new Alert(Alert.AlertType.CONFIRMATION, "Вы действительно хотите удалить заметку?", ok, no);
+            confirmExit.setHeaderText("");
+            confirmExit.setTitle("Удаление заметки!");
+            confirmExit.showAndWait();
+            if (confirmExit.getResult() == ok) {
+                CollectionNotes.deleteNote((Note) listOfNotes.getSelectionModel().getSelectedItem());
+            }
+        }
     }
 
-    private void updateCountLabel(){
+    private void updateCountLabel() {
         countNotes.textProperty().bind(Bindings.size(listOfNotes.getItems()).asString("Найдено %s записей"));
-    }
-
-    public boolean isAddNote() {
-        return addNote;
     }
 
     public static void setAddNote(boolean addNote) {
         NotesWindowController.addNote = addNote;
+    }
+
+    public void toWelcome(ActionEvent actionEvent) throws IOException {
+        Parent welcomeScene = FXMLLoader.load(getClass().getResource("/fxmls/welcomeWindow.fxml"));
+        LoginWindowController.openWelcomeWindow(welcomeScene, listOfNotes);
+    }
+
+    public void changeUser(ActionEvent actionEvent) throws IOException {
+        Parent registerUser = FXMLLoader.load(getClass().getResource("/fxmls/registartionForm.fxml"));
+        LoginWindowController.changeUserWindow(registerUser, listOfNotes);
     }
 }

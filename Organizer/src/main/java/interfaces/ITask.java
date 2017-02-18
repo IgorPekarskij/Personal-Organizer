@@ -3,7 +3,9 @@ package interfaces;
 import objects.Task;
 
 public interface ITask {
-    static void addTask (Task task){};
-    void updateTask (Task task);
-    static void deleteTask (Task task){};
+    static int addTask (Task task){return -1;}
+
+    static void updateTask (Task task){}
+
+    static void deleteTask (Task task){}
 }

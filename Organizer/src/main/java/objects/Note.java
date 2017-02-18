@@ -9,18 +9,29 @@ public class Note {
     private SimpleStringProperty name = new SimpleStringProperty("");
     private SimpleStringProperty description = new SimpleStringProperty("");
     private SimpleStringProperty noteDate = new SimpleStringProperty("");
-    private SimpleObjectProperty noteImage = new SimpleObjectProperty(new byte[0]);
+    private SimpleObjectProperty<byte[]> noteImage = new SimpleObjectProperty<>();
 
     public Note() {
     }
 
-    public Note(int noteId, String name, String description, String noteDate,
-                byte[] personImage) {
+    public Note(int noteId, String name, String description, String noteDate, byte[] personImage) {
         this.noteID = new SimpleIntegerProperty(noteId);
-        this.name = new SimpleStringProperty (name);
-        this.description = new SimpleStringProperty (description);
-        this.noteDate = new SimpleStringProperty (noteDate);
+        this.name = new SimpleStringProperty(name);
+        this.description = new SimpleStringProperty(description);
+        this.noteDate = new SimpleStringProperty(noteDate);
         this.noteImage = new SimpleObjectProperty(personImage);
+    }
+
+    public int getNoteID() {
+        return noteID.get();
+    }
+
+    public SimpleIntegerProperty noteIDProperty() {
+        return noteID;
+    }
+
+    public void setNoteID(int noteID) {
+        this.noteID.set(noteID);
     }
 
     public String getName() {
@@ -59,28 +70,16 @@ public class Note {
         this.noteDate.set(noteDate);
     }
 
-    public Object getNoteImage() {
+    public byte[] getNoteImage() {
         return noteImage.get();
     }
 
-    public SimpleObjectProperty noteImageProperty() {
+    public SimpleObjectProperty<byte[]> noteImageProperty() {
         return noteImage;
     }
 
-    public void setNoteImage(Object noteImage) {
+    public void setNoteImage(byte[] noteImage) {
         this.noteImage.set(noteImage);
-    }
-
-    public int getNoteID() {
-        return noteID.get();
-    }
-
-    public void setNoteID(int noteID) {
-        this.noteID.set(noteID);
-    }
-
-    public SimpleIntegerProperty noteIDProperty() {
-        return noteID;
     }
 
     @Override
@@ -90,29 +89,20 @@ public class Note {
 
         Note note = (Note) o;
 
+        if (noteID != null ? !noteID.equals(note.noteID) : note.noteID != null) return false;
         if (name != null ? !name.equals(note.name) : note.name != null) return false;
         if (description != null ? !description.equals(note.description) : note.description != null) return false;
         if (noteDate != null ? !noteDate.equals(note.noteDate) : note.noteDate != null) return false;
         return noteImage != null ? noteImage.equals(note.noteImage) : note.noteImage == null;
-
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = noteID != null ? noteID.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (noteDate != null ? noteDate.hashCode() : 0);
         result = 31 * result + (noteImage != null ? noteImage.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Note{" +
-                "name=" + name +
-                ", description=" + description +
-                ", noteDate=" + noteDate +
-                ", noteImage=" + noteImage +
-                '}';
     }
 }

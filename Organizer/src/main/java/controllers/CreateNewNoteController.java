@@ -3,16 +3,16 @@ package controllers;
 import interfaces.impls.CollectionNotes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import objects.Note;
 import utils.ConvertData;
 
+import java.time.LocalDate;
 
 public class CreateNewNoteController {
+    @FXML
+    private Button attacheFileNoteButton;
     @FXML
     private Button saveNewNoteButton;
     @FXML
@@ -34,47 +34,59 @@ public class CreateNewNoteController {
         notesWindowController = new NotesWindowController();
     }
 
-    @FXML
-    private void initialise(){
-    }
     public Note getNewNote() {
         return newNote;
     }
 
-    public void setNewNote(Note note) {
-    }
-
-    public void setNote(Note note){
-        if(note != null){
+    public void setNote(Note note) {
+        if (note != null) {
             this.newNote = note;
             newNoteNameField.setText(newNote.getName());
             newNoteDetailTextArea.setText(newNote.getDescription());
-            newNoteDate.setValue(ConvertData.convertStringToLocalDate(newNote.getNoteDate()));
+            newNoteDate.setValue(ConvertData.convertStringToLocalDate(newNote.getNoteDate()) == null ? LocalDate.now() :
+                    ConvertData.convertStringToLocalDate(newNote.getNoteDate()));
             newNoteAttacheImageView.setImage(ConvertData.convertToImage(newNote.getNoteImage()));
         }
     }
 
     public void closeNewNoteWindow(ActionEvent actionEvent) {
         NotesWindowController.setAddNote(false);
+        clearNewNoteFields(actionEvent);
         newContactController.hideWindow(cancelNewNoteButton);
-        System.out.println(notesWindowController.isAddNote());
     }
 
     public void saveNewNote(ActionEvent actionEvent) {
-        //Доработать вставку первой записи
-        System.out.println(newNote);
-        this.newNote.setNoteID(CollectionNotes.getNotesList().get(CollectionNotes.getNotesList().size()-1).getNoteID()+1);
-
-        this.newNote.setName(newNoteNameField.getText() == null ? " " : newNoteNameField.getText());
-        this.newNote.setDescription(newNoteDetailTextArea.getText() == null ? " " : newNoteDetailTextArea.getText());
-        this.newNote.setNoteDate(newNoteDate.getValue() == null ? " " : ConvertData.convertLocalDateToString(newNoteDate.getValue()));
-        notesWindowController.setAddNote(true);
-        newContactController.hideWindow(saveNewNoteButton);
+        if (!newNoteNameField.getText().isEmpty()) {
+            this.newNote.setName(newNoteNameField.getText());
+            this.newNote.setDescription(newNoteDetailTextArea.getText() == null ? " " : newNoteDetailTextArea.getText());
+            this.newNote.setNoteDate(newNoteDate.getValue() == null ? " " : ConvertData.convertLocalDateToString(newNoteDate.getValue()));
+            this.newNote.setNoteImage(newNoteAttacheImageView.getImage() == null ? new byte[0] : newContactController.getTempImage());
+            notesWindowController.setAddNote(true);
+            newContactController.hideWindow(saveNewNoteButton);
+            CollectionNotes.updateNote(newNote);
+            clearNewNoteFields(actionEvent);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Органайзер");
+            alert.getDialogPane().setPrefWidth(500);
+            alert.setHeaderText("Заполните имя заметки!");
+            alert.setContentText("Имя заметки не может быть пустым!");
+            alert.showAndWait();
+        }
     }
 
     public void clearNewNoteFields(ActionEvent actionEvent) {
+        newNoteAttacheImageView.setImage(null);
+        newNoteNameField.setText("");
+        newNoteDetailTextArea.setText("");
+        newNoteDate.setValue(null);
     }
 
     public void addFileToNotes(ActionEvent actionEvent) {
+        newContactController.chooseImage(attacheFileNoteButton, newNoteAttacheImageView);
+    }
+
+    public void exitApplication(ActionEvent actionEvent) {
+        LoginWindowController.exitApplication();
     }
 }

@@ -3,41 +3,125 @@ package interfaces.impls;
 import interfaces.IContact;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import objects.Note;
-import objects.Person;
-import testData.TestData;
+import objects.Contact;
+import utils.Connections;
+import java.sql.*;
 
 public class CollectionContacts implements IContact {
-    private static ObservableList<Person> personsList = FXCollections.observableArrayList();
+    private static ObservableList<Contact> personsList = FXCollections.observableArrayList();
 
-    public static void addContact(Person person) {
+    public static int addContact(Contact person) {
+        int personId = -1;
+        Connection connection = Connections.getConnection();
         personsList.add(person);
-    }
-
-    public void updateContact(Person person) {
-
-    }
-
-    public static void deleteContact(Person person) {
-        personsList.remove(person);
-    }
-
-    public void fillContactList(){
-        if (personsList.size() == 0) {
-            personsList = TestData.createContacts();
+        String query = "INSERT INTO Contacts (Surname, Name, MiddleName, Phone, Email, Address, Birthday, Note, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = null;
+        ResultSet generatedKeys = null;
+        try {
+            ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, person.getSurname());
+            ps.setString(2, person.getName());
+            ps.setString(3, person.getMiddleName());
+            ps.setString(4, person.getPhoneNumber());
+            ps.setString(5, person.getEmail());
+            ps.setString(6, person.getAddress());
+            ps.setString(7, person.getBirthday());
+            ps.setString(8, person.getPersonNote());
+            ps.setBytes(9, person.getPersonImage());
+            ps.executeUpdate();
+            generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                personId = generatedKeys.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (generatedKeys != null) generatedKeys.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        System.out.println(personsList.size());
+        return personId;
     }
 
-    public void setNotesList(ObservableList<Note> notesList) {
-        CollectionNotes.notesList = notesList;
+    public static void updateContact(Contact person) {
+        Connection connection = Connections.getConnection();
+        String query = "UPDATE Contacts SET Surname = ?, Name = ?, MiddleName = ?, Phone = ?, Email = ?, Address = ?, Birthday = ?, Note = ?, Image = ? WHERE Id = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setString(1, person.getSurname());
+            ps.setString(2, person.getName());
+            ps.setString(3, person.getMiddleName());
+            ps.setString(4, person.getPhoneNumber());
+            ps.setString(5, person.getEmail());
+            ps.setString(6, person.getAddress());
+            ps.setString(7, person.getBirthday());
+            ps.setString(8, person.getPersonNote());
+            ps.setBytes(9, person.getPersonImage());
+            ps.setInt(10, person.getPersonID());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public static ObservableList<Person> getPersonsList() {
+    public static void deleteContact(Contact person) {
+        Connection connection = Connections.getConnection();
+        Statement statement = null;
+        personsList.remove(person);
+        String query;
+        try {
+            statement = connection.createStatement();
+            query = "DELETE FROM Contacts WHERE ID=" + person.getPersonID();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public void fillContactList() {
+        Connection connection = Connections.getConnection();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM Contacts;";
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                personsList.add(new Contact(resultSet.getInt("Id"), resultSet.getString("Surname"), resultSet.getString("Name"),
+                        resultSet.getString("MiddleName"), resultSet.getString("Phone"), resultSet.getString("Email"),
+                        resultSet.getString("Address"), resultSet.getString("Birthday"), resultSet.getString("Note"),
+                        resultSet.getBytes("Image") == null ? null : resultSet.getBytes("Image")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static ObservableList<Contact> getPersonsList() {
         return personsList;
-    }
-
-    public void setPersonsList(ObservableList<Person> personsList) {
-        this.personsList = personsList;
     }
 }

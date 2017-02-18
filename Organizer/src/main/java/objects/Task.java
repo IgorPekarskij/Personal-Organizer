@@ -6,29 +6,30 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Task {
-    private SimpleIntegerProperty taskID;
+    private SimpleIntegerProperty taskID = new SimpleIntegerProperty();
     private SimpleStringProperty name = new SimpleStringProperty("");
     private SimpleStringProperty description = new SimpleStringProperty("");
     private SimpleStringProperty startDate = new SimpleStringProperty("");
     private SimpleStringProperty endDate = new SimpleStringProperty("");
     private SimpleStringProperty startTime = new SimpleStringProperty("");
     private SimpleStringProperty endTime = new SimpleStringProperty("");
-    private SimpleBooleanProperty isImportant = new SimpleBooleanProperty(false);
-    private SimpleObjectProperty personImage = new SimpleObjectProperty(new byte[0]);
+    private SimpleObjectProperty<byte[]> taskImage = new SimpleObjectProperty<>();
+    private SimpleBooleanProperty completed = new SimpleBooleanProperty(false);
 
     public Task() {
     }
 
-    public Task(SimpleStringProperty name, SimpleStringProperty description, SimpleStringProperty startDate, SimpleStringProperty endDate,
-                SimpleStringProperty startTime, SimpleStringProperty endTime, SimpleBooleanProperty isImportant, SimpleObjectProperty personImage) {
-        this.name = name;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.isImportant = isImportant;
-        this.personImage = personImage;
+    public Task(Integer id, String name, String description, String startDate, String endDate,
+                String startTime, String endTime, byte[] taskImage, boolean completed) {
+        this.taskID = new SimpleIntegerProperty(id);
+        this.name = new SimpleStringProperty(name);
+        this.description = new SimpleStringProperty(description);
+        this.startDate = new SimpleStringProperty(startDate);
+        this.endDate = new SimpleStringProperty(endDate);
+        this.startTime = new SimpleStringProperty(startTime);
+        this.endTime = new SimpleStringProperty(endTime);
+        this.taskImage = new SimpleObjectProperty(taskImage);
+        this.completed = new SimpleBooleanProperty(completed);
     }
 
     public int getTaskID() {
@@ -115,28 +116,28 @@ public class Task {
         this.endTime.set(endTime);
     }
 
-    public boolean isIsImportant() {
-        return isImportant.get();
+    public byte[] getTaskImage() {
+        return taskImage.get();
     }
 
-    public SimpleBooleanProperty isImportantProperty() {
-        return isImportant;
+    public SimpleObjectProperty<byte[]> taskImageProperty() {
+        return taskImage;
     }
 
-    public void setIsImportant(boolean isImportant) {
-        this.isImportant.set(isImportant);
+    public void setTaskImage(byte[] taskImage) {
+        this.taskImage.set(taskImage);
     }
 
-    public Object getPersonImage() {
-        return personImage.get();
+    public boolean isCompleted() {
+        return completed.get();
     }
 
-    public SimpleObjectProperty personImageProperty() {
-        return personImage;
+    public SimpleBooleanProperty completedProperty() {
+        return completed;
     }
 
-    public void setPersonImage(Object personImage) {
-        this.personImage.set(personImage);
+    public void setCompleted(boolean completed) {
+        this.completed.set(completed);
     }
 
     @Override
@@ -153,9 +154,8 @@ public class Task {
         if (endDate != null ? !endDate.equals(task.endDate) : task.endDate != null) return false;
         if (startTime != null ? !startTime.equals(task.startTime) : task.startTime != null) return false;
         if (endTime != null ? !endTime.equals(task.endTime) : task.endTime != null) return false;
-        if (isImportant != null ? !isImportant.equals(task.isImportant) : task.isImportant != null) return false;
-        return personImage != null ? personImage.equals(task.personImage) : task.personImage == null;
-
+        if (taskImage != null ? !taskImage.equals(task.taskImage) : task.taskImage != null) return false;
+        return completed != null ? completed.equals(task.completed) : task.completed == null;
     }
 
     @Override
@@ -167,8 +167,8 @@ public class Task {
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        result = 31 * result + (isImportant != null ? isImportant.hashCode() : 0);
-        result = 31 * result + (personImage != null ? personImage.hashCode() : 0);
+        result = 31 * result + (taskImage != null ? taskImage.hashCode() : 0);
+        result = 31 * result + (completed != null ? completed.hashCode() : 0);
         return result;
     }
 }

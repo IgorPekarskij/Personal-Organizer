@@ -1,9 +1,9 @@
 package interfaces;
 
-import objects.Person;
+import objects.Contact;
 
 public interface IContact {
-    static void addContact (Person person){};
-    void updateContact (Person person);
-    static void deleteContact (Person person){};
+    static int addContact (Contact person){return -1;};
+    static void updateContact (Contact person){};
+    static void deleteContact (Contact person){};
 }
