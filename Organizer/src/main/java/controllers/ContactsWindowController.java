@@ -12,19 +12,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import objects.Person;
+import javafx.stage.WindowEvent;
+import objects.Contact;
 import utils.ConvertData;
+
 import java.io.IOException;
 
-public class ContactsController {
-    private CollectionContacts collectionContacts = new CollectionContacts();
-    private static Person currentPerson;
+public class ContactsWindowController {
+    private Contact currentPerson;
     private Parent fxmlEdit;
     private FXMLLoader fxmlLoader;
     private CreateNewContactController createNewContact;
@@ -62,14 +61,13 @@ public class ContactsController {
     @FXML
     private void initialize() {
         //Fill table.
-        surnameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("surname"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("PhoneNumber"));
+        surnameColumn.setCellValueFactory(new PropertyValueFactory<Contact, String>("surname"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Contact, String>("name"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<Contact, String>("phoneNumber"));
         initListeners();
         initLoader();
         fillData();
-
-        FilteredList <Person> filteredList = new FilteredList<>(collectionContacts.getPersonsList(), p -> true);
+        FilteredList<Contact> filteredList = new FilteredList<>(CollectionContacts.getPersonsList(), p -> true);
         contactSearchField.textProperty().addListener(((observable, oldValue, newValue) -> {
             filteredList.setPredicate(person -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -77,26 +75,25 @@ public class ContactsController {
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
                 if (person.getSurname().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches first name.
+                    return true;
                 } else if (person.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
+                    return true;
                 } else if (person.getPhoneNumber().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches phone.
+                    return true;
                 }
-                return false; // Does not match.
+                return false;
             });
-        }) );
-
-        SortedList<Person> sortedList = new SortedList<Person>(filteredList);
+        }));
+        SortedList<Contact> sortedList = new SortedList<Contact>(filteredList);
         sortedList.comparatorProperty().bind(listOfContact.comparatorProperty());
         listOfContact.setItems(sortedList);
         updateCountLabel();
     }
 
     private void fillData() {
-        collectionContacts.fillContactList();
-        listOfContact.setItems(collectionContacts.getPersonsList());
+        listOfContact.setItems(CollectionContacts.getPersonsList());
         listOfContact.getSelectionModel().selectFirst();
+        showPersonDetail((Contact) listOfContact.getSelectionModel().getSelectedItem());
     }
 
     private void initListeners() {
@@ -108,10 +105,10 @@ public class ContactsController {
         listOfContact.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(event.getClickCount() == 2) {
-                    createNewContact.setPerson((Person) listOfContact.getSelectionModel().getSelectedItem());
+                if (event.getClickCount() == 2) {
+                    createNewContact.setPerson((Contact) listOfContact.getSelectionModel().getSelectedItem());
                     editDialogStage = showWindow(editDialogStage, listOfContact, fxmlEdit);
-                    showPersonDetail((Person) listOfContact.getSelectionModel().getSelectedItem());
+                    showPersonDetail((Contact) listOfContact.getSelectionModel().getSelectedItem());
                 }
             }
         });
@@ -130,93 +127,121 @@ public class ContactsController {
 
     private void showPersonDetail(Object person) {
         if (person == null) return;
-        currentPerson = (Person) person;
+        currentPerson = (Contact) person;
         fioCurrentContact.setText(currentPerson.getSurname() + " " + currentPerson.getName() + " " + currentPerson.getMiddleName());
         telephoneCurrentContact.setText(currentPerson.getPhoneNumber());
         emailCurrentContact.setText(currentPerson.getEmail());
         addressCurrentContact.setText(currentPerson.getAddress());
         birthdayCurrentContact.setText(currentPerson.getBirthday());
         noteCurrentContact.setText(currentPerson.getPersonNote());
-        Image image = ConvertData.convertToImage(currentPerson.getPersonImage());
-        if(image != null) {
-            contactImage.setImage(image);
-            AnchorPane pane = (AnchorPane) contactImage.getParent();
-            pane.setCenterShape(true);
-        }
+        contactImage.setImage(ConvertData.convertToImage(currentPerson.getPersonImage()));
     }
 
     public void createNewContact(ActionEvent event) throws IOException {
         Object currentEvent = event.getSource();
-        if(!(currentEvent instanceof Button)){
+        if (!(currentEvent instanceof Button)) {
             return;
         }
         Button currentButton = (Button) currentEvent;
         switch (currentButton.getId()) {
-            case "newContactButton" :
-                System.out.println(addPerson);
-                createNewContact.setPerson(new Person());
+            case "newContactButton":
+                createNewContact.setPerson(new Contact());
                 editDialogStage = showWindow(editDialogStage, listOfContact, fxmlEdit);
-                System.out.println(addPerson);
                 if (addPerson) {
-                    collectionContacts.addContact(createNewContact.getNewPerson());
+                    int id = CollectionContacts.addContact(createNewContact.getNewPerson());
+                    createNewContact.getNewPerson().setPersonID(id);
                     listOfContact.getSelectionModel().selectLast();
                 }
                 break;
-            case "updateContactButton" :
-                createNewContact.setPerson((Person) listOfContact.getSelectionModel().getSelectedItem());
+            case "updateContactButton":
+                createNewContact.setPerson((Contact) listOfContact.getSelectionModel().getSelectedItem());
                 editDialogStage = showWindow(editDialogStage, listOfContact, fxmlEdit);
-                showPersonDetail((Person)listOfContact.getSelectionModel().getSelectedItem());
+                showPersonDetail((Contact) listOfContact.getSelectionModel().getSelectedItem());
+                listOfContact.refresh();
                 break;
         }
     }
 
     public void deleteContact(ActionEvent event) {
-        CollectionContacts.deleteContact((Person) listOfContact.getSelectionModel().getSelectedItem());
+        int rowNumber = listOfContact.getSelectionModel().getSelectedIndex();
+        if (rowNumber < 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Органайзер");
+            alert.getDialogPane().setPrefWidth(500);
+            alert.setHeaderText("Выберите задачу!");
+            alert.showAndWait();
+        } else {
+            ButtonType ok = new ButtonType("Да", ButtonBar.ButtonData.YES);
+            ButtonType no = new ButtonType("Нет", ButtonBar.ButtonData.NO);
+            Alert confirmExit = new Alert(Alert.AlertType.CONFIRMATION, "Вы действительно хотите удалить контакт?", ok, no);
+            confirmExit.setHeaderText("");
+            confirmExit.setTitle("Удаление контакта!");
+            confirmExit.showAndWait();
+            if (confirmExit.getResult() == ok) {
+                CollectionContacts.deleteContact((Contact) listOfContact.getSelectionModel().getSelectedItem());
+                fioCurrentContact.setText(" ");
+                telephoneCurrentContact.setText("");
+                emailCurrentContact.setText("");
+                birthdayCurrentContact.setText("");
+                addressCurrentContact.setText("");
+                noteCurrentContact.setText("");
+                contactImage.setImage(null);
+            }
+            listOfContact.refresh();
+            listOfContact.getSelectionModel().selectFirst();
+        }
     }
 
-    private void updateCountLabel(){
+    private void updateCountLabel() {
         countFoundRecords.textProperty().bind(Bindings.size(listOfContact.getItems()).asString("Найдено %s записей"));
     }
 
-    public static Person getCurrentPerson() {
-        return currentPerson;
-    }
-
     public Stage showWindow(Stage stage, TableView tableView, Parent fxmlEdit) {
-        if(stage == null) {
-            System.out.println("New Stage");
+        if (stage == null) {
             stage = new Stage();
-            stage.setTitle("Organizer");
-            stage.setResizable(false);
+            stage.setTitle("Органайзер");
+            stage.setResizable(true);
             stage.setScene(new Scene(fxmlEdit));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(tableView.getParent().getScene().getWindow());
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    event.consume();
+
+                }
+            });
         }
         stage.showAndWait();
         return stage;
     }
 
     public static void setAddPerson(boolean addPerson) {
-        ContactsController.addPerson = addPerson;
+        ContactsWindowController.addPerson = addPerson;
     }
 
     public void exitApplication(ActionEvent event) {
-       LoginWindowController.exitApplication();
+        LoginWindowController.exitApplication();
     }
 
-
-    public void openContacts(ActionEvent event) throws IOException{
-        Parent contactScene = FXMLLoader.load(getClass().getResource("/fxmls/contactsWindow.fxml"));
-        WelcomeWindowController.openNewWindow(listOfContact, contactScene);
-    }
-
-    public void openTasks(ActionEvent event) throws IOException{
+    public void openTasks(ActionEvent event) throws IOException {
         Parent contactScene = FXMLLoader.load(getClass().getResource("/fxmls/tasksWindow.fxml"));
         WelcomeWindowController.openNewWindow(listOfContact, contactScene);
     }
 
-    public void openNotes(ActionEvent event) throws IOException{
+    public void openNotes(ActionEvent event) throws IOException {
         Parent contactScene = FXMLLoader.load(getClass().getResource("/fxmls/notesWindow.fxml"));
         WelcomeWindowController.openNewWindow(listOfContact, contactScene);
+    }
+
+    public void toWelcome(ActionEvent actionEvent) throws IOException {
+        Parent welcomeScene = FXMLLoader.load(getClass().getResource("/fxmls/welcomeWindow.fxml"));
+        LoginWindowController.openWelcomeWindow(welcomeScene, listOfContact);
+    }
+
+
+    public void changeUser(ActionEvent actionEvent) throws IOException {
+        Parent registerUser = FXMLLoader.load(getClass().getResource("/fxmls/registartionForm.fxml"));
+        LoginWindowController.changeUserWindow(registerUser, listOfContact);
     }
 }
