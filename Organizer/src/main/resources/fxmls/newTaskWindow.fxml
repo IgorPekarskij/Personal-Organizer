@@ -1,197 +1,246 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="857.0" prefWidth="1192.0" styleClass="background" stylesheets="@../css/ControllsStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <BorderPane layoutX="79.0" layoutY="134.0" prefHeight="857.0" prefWidth="1192.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <MenuBar BorderPane.alignment="CENTER">
-              <menus>
-                <Menu mnemonicParsing="false" text="Файл">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Закрыть" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Редактировать">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Контакты">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Новый контакт" />
-                  </items>
-                </Menu>
-                  <Menu mnemonicParsing="false" text="Задачи">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Новая задача" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Заметки">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Помощь">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                     </items>
-                  </Menu>
-              </menus>
-            </MenuBar>
-         </top>
-         <center>
-            <SplitPane dividerPositions="0.5036319612590799" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                     <children>
-                        <HBox alignment="CENTER" layoutY="-3.0" maxWidth="70.0" minWidth="70.0" prefHeight="70.0" prefWidth="1192.0" styleClass="background" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Button fx:id="saveNewTaskButton" layoutX="503.0" layoutY="64.0" mnemonicParsing="false" text="Сохранить">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                                 <styleClass>
-                                    <String fx:value="commonButtonStyle" />
-                                    <String fx:value="confirmButton" />
-                                 </styleClass>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="cancelNewTaskButton" layoutX="618.0" layoutY="64.0" mnemonicParsing="false" text="Отмена">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                                 <styleClass>
-                                    <String fx:value="commonButtonStyle" />
-                                    <String fx:value="confirmButton" />
-                                 </styleClass>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="clearNewTaskFieldButton" layoutX="708.0" layoutY="64.0" mnemonicParsing="false" text="Очистить">
-                                 <effect>
-                                    <DropShadow />
-                                 </effect>
-                                 <styleClass>
-                                    <String fx:value="commonButtonStyle" />
-                                    <String fx:value="confirmButton" />
-                                 </styleClass>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <TextArea fx:id="newTaskDetailTextArea" layoutX="33.0" layoutY="177.0" prefHeight="184.0" prefWidth="1124.0" promptText="Введите описание задачи" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="177.0" />
-                        <TextField fx:id="newTaskNameField" layoutX="33.0" layoutY="101.0" prefHeight="30.0" prefWidth="1124.0" promptText="Введите имя задачи" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="101.0" />
-                        <Label layoutX="33.0" layoutY="153.0" prefHeight="15.0" prefWidth="135.0" styleClass="newPageLabel" text="Описание задачи" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="1022.0" AnchorPane.topAnchor="153.0" />
-                        <Label layoutX="33.0" layoutY="78.0" prefHeight="15.0" prefWidth="108.0" styleClass="newPageLabel" text="Имя задачи" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="1049.0" AnchorPane.topAnchor="78.0" />
-                        <DatePicker fx:id="newTaskStartDate" layoutX="33.0" layoutY="365.0" promptText="Выберите дату начал" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="33.0" />
-                        <DatePicker fx:id="newTaskEndDate" layoutX="438.0" layoutY="365.0" promptText="Выберите дату окончания" />
-                        <CheckBox fx:id="importantTaskCheckBox" layoutX="187.0" layoutY="152.0" mnemonicParsing="false" text="Важно" />
-                        <SplitMenuButton fx:id="newTaskEndTime" layoutX="662.0" layoutY="365.0" mnemonicParsing="false" text="Время завершения">
-                          <items>
-                              <MenuItem mnemonicParsing="false" text="00:00" />
-                              <MenuItem mnemonicParsing="false" text="01:00" />
-                              <MenuItem mnemonicParsing="false" text="02:00" />
-                              <MenuItem mnemonicParsing="false" text="03:00" />
-                              <MenuItem mnemonicParsing="false" text="04:00" />
-                              <MenuItem mnemonicParsing="false" text="05:00" />
-                              <MenuItem mnemonicParsing="false" text="06:00" />
-                              <MenuItem mnemonicParsing="false" text="07:00" />
-                              <MenuItem mnemonicParsing="false" text="08:00" />
-                              <MenuItem mnemonicParsing="false" text="09:00" />
-                              <MenuItem mnemonicParsing="false" text="10:00" />
-                              <MenuItem mnemonicParsing="false" text="11:00" />
-                              <MenuItem mnemonicParsing="false" text="12:00" />
-                              <MenuItem mnemonicParsing="false" text="13:00" />
-                              <MenuItem mnemonicParsing="false" text="14:00" />
-                              <MenuItem mnemonicParsing="false" text="15:00" />
-                              <MenuItem mnemonicParsing="false" text="16:00" />
-                              <MenuItem mnemonicParsing="false" text="17:00" />
-                              <MenuItem mnemonicParsing="false" text="18:00" />
-                              <MenuItem mnemonicParsing="false" text="19:00" />
-                              <MenuItem mnemonicParsing="false" text="20:00" />
-                              <MenuItem mnemonicParsing="false" text="21:00" />
-                              <MenuItem mnemonicParsing="false" text="22:00" />
-                              <MenuItem mnemonicParsing="false" text="23:00" />
-                          </items>
-                        </SplitMenuButton>
-                        <SplitMenuButton fx:id="newTaskStartTime" layoutX="248.0" layoutY="365.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="173.0" text="Время начала">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="00:00" />
-                              <MenuItem mnemonicParsing="false" text="01:00" />
-                              <MenuItem mnemonicParsing="false" text="02:00" />
-                              <MenuItem mnemonicParsing="false" text="03:00" />
-                              <MenuItem mnemonicParsing="false" text="04:00" />
-                              <MenuItem mnemonicParsing="false" text="05:00" />
-                              <MenuItem mnemonicParsing="false" text="06:00" />
-                              <MenuItem mnemonicParsing="false" text="07:00" />
-                              <MenuItem mnemonicParsing="false" text="08:00" />
-                              <MenuItem mnemonicParsing="false" text="09:00" />
-                              <MenuItem mnemonicParsing="false" text="10:00" />
-                              <MenuItem mnemonicParsing="false" text="11:00" />
-                              <MenuItem mnemonicParsing="false" text="12:00" />
-                              <MenuItem mnemonicParsing="false" text="13:00" />
-                              <MenuItem mnemonicParsing="false" text="14:00" />
-                              <MenuItem mnemonicParsing="false" text="15:00" />
-                              <MenuItem mnemonicParsing="false" text="16:00" />
-                              <MenuItem mnemonicParsing="false" text="17:00" />
-                              <MenuItem mnemonicParsing="false" text="18:00" />
-                              <MenuItem mnemonicParsing="false" text="19:00" />
-                              <MenuItem mnemonicParsing="false" text="20:00" />
-                              <MenuItem mnemonicParsing="false" text="21:00" />
-                              <MenuItem mnemonicParsing="false" text="22:00" />
-                              <MenuItem mnemonicParsing="false" text="23:00" />
-                           </items>
-                        </SplitMenuButton>
-                     </children>
-                  </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                     <children>
-                        <SplitPane dividerPositions="0.5" layoutX="233.0" layoutY="40.0" prefHeight="399.0" prefWidth="1190.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                 <children>
-                                    <ImageView fx:id="newTaskAttacheImageView" fitHeight="398.0" fitWidth="590.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                 </children>
-                              </AnchorPane>
-                            <AnchorPane maxWidth="590.0" minHeight="0.0" minWidth="590.0" prefHeight="160.0" prefWidth="100.0" styleClass="background">
-                                 <children>
-                                    <TextField fx:id="attacheFileTaskField" layoutX="37.0" layoutY="174.0" prefHeight="25.0" prefWidth="356.0" promptText="Выберете файл" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="197.0" />
-                                    <Button fx:id="attacheFileTaskButton" layoutX="419.0" layoutY="167.0" maxWidth="114.0" mnemonicParsing="false" prefWidth="114.0" text="Открыть" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="419.0">
-                                       <effect>
-                                          <DropShadow />
-                                       </effect>
-                                       <styleClass>
-                                          <String fx:value="commonButtonStyle" />
-                                          <String fx:value="confirmButton" />
-                                       </styleClass>
-                                    </Button>
-                                 </children>
-                              </AnchorPane>
-                          </items>
-                        </SplitPane>
-                     </children></AnchorPane>
-              </items>
-            </SplitPane>
-         </center>
-         <bottom>
-            <HBox>
-               <children>
-                  <Label styleClass="newPageLabel" text="Новая задача" BorderPane.alignment="CENTER" />
-               </children>
-            </HBox>
-         </bottom>
-      </BorderPane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="980.0" prefHeight="710.0"
+            prefWidth="980.0" styleClass="background" stylesheets="@../css/ControllsStyle.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.CreateNewTaskController">
+    <children>
+        <BorderPane layoutX="79.0" layoutY="134.0" prefHeight="857.0" prefWidth="1192.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <MenuBar BorderPane.alignment="CENTER">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Файл">
+                            <items>
+                                <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#exitApplication"
+                                          text="Выйти"/>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </top>
+            <center>
+                <SplitPane dividerPositions="0.6079545454545454" orientation="VERTICAL" prefHeight="200.0"
+                           prefWidth="160.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <HBox alignment="CENTER" layoutY="-3.0" prefHeight="70.0" prefWidth="1192.0"
+                                      styleClass="background" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                      AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <Button fx:id="saveNewTaskButton" defaultButton="true" layoutX="503.0"
+                                                layoutY="64.0" mnemonicParsing="false" onAction="#saveNewTask"
+                                                text="Сохранить">
+                                            <effect>
+                                                <DropShadow/>
+                                            </effect>
+                                            <styleClass>
+                                                <String fx:value="commonButtonStyle"/>
+                                                <String fx:value="confirmButton"/>
+                                            </styleClass>
+                                            <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </HBox.margin>
+                                        </Button>
+                                        <Button fx:id="cancelNewTaskButton" cancelButton="true" layoutX="618.0"
+                                                layoutY="64.0" mnemonicParsing="false" onAction="#closeNewTaskWindow"
+                                                text="Отмена">
+                                            <effect>
+                                                <DropShadow/>
+                                            </effect>
+                                            <styleClass>
+                                                <String fx:value="commonButtonStyle"/>
+                                                <String fx:value="confirmButton"/>
+                                            </styleClass>
+                                            <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </HBox.margin>
+                                        </Button>
+                                        <Button fx:id="clearNewTaskFieldButton" layoutX="708.0" layoutY="64.0"
+                                                mnemonicParsing="false" onAction="#clearNewTaskFields" text="Очистить">
+                                            <effect>
+                                                <DropShadow/>
+                                            </effect>
+                                            <styleClass>
+                                                <String fx:value="commonButtonStyle"/>
+                                                <String fx:value="confirmButton"/>
+                                            </styleClass>
+                                            <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </HBox.margin>
+                                        </Button>
+                                        <Button fx:id="attacheFileTaskButton" mnemonicParsing="false"
+                                                onAction="#addFileToTask" prefHeight="40.0" prefWidth="145.0"
+                                                styleClass="commonButtonStyle" text="Добавить фото">
+                                            <effect>
+                                                <DropShadow/>
+                                            </effect>
+                                            <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </HBox.margin>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <TextArea fx:id="newTaskDetailTextArea" layoutX="33.0" layoutY="177.0"
+                                          prefHeight="184.0" prefWidth="1124.0" promptText="Введите описание задачи"
+                                          AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="33.0"
+                                          AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="177.0"/>
+                                <TextField fx:id="newTaskNameField" layoutX="33.0" layoutY="101.0" prefHeight="30.0"
+                                           prefWidth="1124.0" promptText="Введите имя задачи"
+                                           AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="33.0"
+                                           AnchorPane.topAnchor="101.0"/>
+                                <Label layoutX="33.0" layoutY="154.0" prefHeight="15.0" prefWidth="135.0"
+                                       styleClass="newPageLabel" text="Описание задачи" AnchorPane.leftAnchor="33.0"
+                                       AnchorPane.topAnchor="154.0"/>
+                                <Label layoutX="33.0" layoutY="79.0" prefHeight="15.0" prefWidth="108.0"
+                                       styleClass="newPageLabel" text="Имя задачи" AnchorPane.leftAnchor="33.0"
+                                       AnchorPane.topAnchor="79.0"/>
+                                <DatePicker fx:id="newTaskStartDate" layoutX="96.0" layoutY="374.0" prefHeight="26.0"
+                                            prefWidth="154.0" promptText="Дата начала" AnchorPane.bottomAnchor="11.0"
+                                            AnchorPane.leftAnchor="96.0"/>
+                                <DatePicker fx:id="newTaskEndDate" layoutX="593.0" layoutY="383.0" prefHeight="26.0"
+                                            prefWidth="154.0" promptText="Дата окончания" AnchorPane.bottomAnchor="10.0"
+                                            AnchorPane.leftAnchor="593.0"/>
+                                <Label layoutX="353.0" layoutY="386.0" text=":" AnchorPane.bottomAnchor="18.0"
+                                       AnchorPane.leftAnchor="353.0"/>
+                                <Label layoutX="33.0" layoutY="379.0" text="Начало" AnchorPane.bottomAnchor="18.0"
+                                       AnchorPane.leftAnchor="33.0"/>
+                                <SplitMenuButton fx:id="newTaskStartHour" alignment="CENTER" layoutX="260.0"
+                                                 layoutY="374.0" mnemonicParsing="false" prefHeight="26.0"
+                                                 prefWidth="86.0" text="Часы" textAlignment="CENTER"
+                                                 AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="260.0">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="00"/>
+                                        <MenuItem mnemonicParsing="false" text="01"/>
+                                        <MenuItem mnemonicParsing="false" text="02"/>
+                                        <MenuItem mnemonicParsing="false" text="03"/>
+                                        <MenuItem mnemonicParsing="false" text="04"/>
+                                        <MenuItem mnemonicParsing="false" text="05"/>
+                                        <MenuItem mnemonicParsing="false" text="06"/>
+                                        <MenuItem mnemonicParsing="false" text="07"/>
+                                        <MenuItem mnemonicParsing="false" text="08"/>
+                                        <MenuItem mnemonicParsing="false" text="09"/>
+                                        <MenuItem mnemonicParsing="false" text="10"/>
+                                        <MenuItem mnemonicParsing="false" text="11"/>
+                                        <MenuItem mnemonicParsing="false" text="12"/>
+                                        <MenuItem mnemonicParsing="false" text="13"/>
+                                        <MenuItem mnemonicParsing="false" text="14"/>
+                                        <MenuItem mnemonicParsing="false" text="15"/>
+                                        <MenuItem mnemonicParsing="false" text="16"/>
+                                        <MenuItem mnemonicParsing="false" text="17"/>
+                                        <MenuItem mnemonicParsing="false" text="18"/>
+                                        <MenuItem mnemonicParsing="false" text="19"/>
+                                        <MenuItem mnemonicParsing="false" text="20"/>
+                                        <MenuItem mnemonicParsing="false" text="21"/>
+                                        <MenuItem mnemonicParsing="false" text="22"/>
+                                        <MenuItem mnemonicParsing="false" text="23"/>
+                                    </items>
+                                </SplitMenuButton>
+                                <SplitMenuButton fx:id="newTaskStartMin" alignment="CENTER" layoutX="365.0"
+                                                 layoutY="374.0" mnemonicParsing="false" prefHeight="26.0"
+                                                 prefWidth="102.0" text="Минуты" textAlignment="CENTER"
+                                                 AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="365.0">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="10"/>
+                                        <MenuItem mnemonicParsing="false" text="20"/>
+                                        <MenuItem mnemonicParsing="false" text="30"/>
+                                        <MenuItem mnemonicParsing="false" text="40"/>
+                                        <MenuItem mnemonicParsing="false" text="50"/>
+                                        <MenuItem mnemonicParsing="false" text="00"/>
+                                    </items>
+                                </SplitMenuButton>
+                                <SplitMenuButton fx:id="newTaskEndHour" alignment="CENTER" contentDisplay="CENTER"
+                                                 layoutX="758.0" layoutY="382.0" mnemonicParsing="false"
+                                                 prefHeight="26.0" prefWidth="86.0" text="Часы" textAlignment="CENTER"
+                                                 AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="758.0">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="00"/>
+                                        <MenuItem mnemonicParsing="false" text="01"/>
+                                        <MenuItem mnemonicParsing="false" text="02"/>
+                                        <MenuItem mnemonicParsing="false" text="03"/>
+                                        <MenuItem mnemonicParsing="false" text="04"/>
+                                        <MenuItem mnemonicParsing="false" text="05"/>
+                                        <MenuItem mnemonicParsing="false" text="06"/>
+                                        <MenuItem mnemonicParsing="false" text="07"/>
+                                        <MenuItem mnemonicParsing="false" text="08"/>
+                                        <MenuItem mnemonicParsing="false" text="09"/>
+                                        <MenuItem mnemonicParsing="false" text="10"/>
+                                        <MenuItem mnemonicParsing="false" text="11"/>
+                                        <MenuItem mnemonicParsing="false" text="12"/>
+                                        <MenuItem mnemonicParsing="false" text="13"/>
+                                        <MenuItem mnemonicParsing="false" text="14"/>
+                                        <MenuItem mnemonicParsing="false" text="15"/>
+                                        <MenuItem mnemonicParsing="false" text="16"/>
+                                        <MenuItem mnemonicParsing="false" text="17"/>
+                                        <MenuItem mnemonicParsing="false" text="18"/>
+                                        <MenuItem mnemonicParsing="false" text="19"/>
+                                        <MenuItem mnemonicParsing="false" text="20"/>
+                                        <MenuItem mnemonicParsing="false" text="21"/>
+                                        <MenuItem mnemonicParsing="false" text="22"/>
+                                        <MenuItem mnemonicParsing="false" text="23"/>
+                                    </items>
+                                </SplitMenuButton>
+                                <SplitMenuButton fx:id="newTaskEndMin" alignment="CENTER" layoutX="863.0"
+                                                 layoutY="382.0" mnemonicParsing="false" prefHeight="26.0"
+                                                 prefWidth="102.0" text="Минуты" AnchorPane.bottomAnchor="11.0"
+                                                 AnchorPane.leftAnchor="863.0">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="10"/>
+                                        <MenuItem mnemonicParsing="false" text="20"/>
+                                        <MenuItem mnemonicParsing="false" text="30"/>
+                                        <MenuItem mnemonicParsing="false" text="40"/>
+                                        <MenuItem mnemonicParsing="false" text="50"/>
+                                        <MenuItem mnemonicParsing="false" text="00"/>
+                                    </items>
+                                </SplitMenuButton>
+                                <Label layoutX="851.0" layoutY="387.0" prefHeight="15.0" prefWidth="0.0" text=":"
+                                       AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="851.0"/>
+                                <Label layoutX="510.0" layoutY="389.0" text="Окончание" AnchorPane.bottomAnchor="15.0"
+                                       AnchorPane.leftAnchor="510.0"/>
+                                <CheckBox fx:id="completedTaskCheckBox" layoutX="888.0" layoutY="153.0"
+                                          mnemonicParsing="false" text="Выполнено" textFill="#1fc22d"
+                                          AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="153.0"/>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <SplitPane dividerPositions="0.41389432485322897" layoutX="233.0" layoutY="40.0"
+                                           prefHeight="399.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0"
+                                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0"
+                                           AnchorPane.topAnchor="0.0">
+                                    <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="425.0">
+                                            <children>
+                                                <ImageView fx:id="newTaskAttacheImageView" fitHeight="283.0"
+                                                           fitWidth="422.0" layoutX="1.0" layoutY="1.0"
+                                                           pickOnBounds="true" preserveRatio="true"
+                                                           AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0"
+                                                           AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="0.0"/>
+                                            </children>
+                                        </AnchorPane>
+                                        <AnchorPane prefHeight="300.0" prefWidth="608.0" styleClass="background"/>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </center>
+            <bottom>
+                <HBox>
+                    <children>
+                        <Label styleClass="newPageLabel" text="Новая задача" BorderPane.alignment="CENTER"/>
+                    </children>
+                </HBox>
+            </bottom>
+        </BorderPane>
+    </children>
 </AnchorPane>

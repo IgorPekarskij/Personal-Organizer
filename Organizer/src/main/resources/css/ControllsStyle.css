@@ -19,7 +19,7 @@
 }
 
 .welcomeWindowButton {
-    -fx-min-height: 60px;
+    -fx-min-height: 55px;
     -fx-min-width: 190px;
     -fx-end-margin: 10px;
     -fx-start-margin: 10px;
@@ -76,4 +76,8 @@
 .textAreaCustom{
     -fx-border-width: 0px;
     -fx-background-color: lightgray;
+}
+
+.table-cell {
+    -fx-alignment: center;
 }
