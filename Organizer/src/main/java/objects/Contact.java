@@ -70,6 +70,24 @@ public class Contact {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "personID=" + personID +
+                ", surname=" + surname +
+                ", name=" + name +
+                ", middleName=" + middleName +
+                ", phoneNumber=" + phoneNumber +
+                ", email=" + email +
+                ", country=" + country +
+                ", city=" + city +
+                ", address=" + address +
+                ", birthday=" + birthday +
+                ", personNote=" + personNote +
+                ", personImage=" + personImage +
+                '}';
+    }
+
     public int getPersonID() {
 
         return personID.get();

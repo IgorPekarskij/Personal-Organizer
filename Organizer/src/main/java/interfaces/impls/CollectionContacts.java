@@ -5,7 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import objects.Contact;
 import utils.Connections;
+import utils.ConvertData;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CollectionContacts implements IContact {
     private static ObservableList<Contact> personsList = FXCollections.observableArrayList();
@@ -99,7 +103,7 @@ public class CollectionContacts implements IContact {
         }
     }
 
-    public void fillContactList() {
+    public static void fillContactList() {
         Connection connection = Connections.getConnection();
         Statement statement = null;
         ResultSet resultSet = null;
@@ -129,4 +133,35 @@ public class CollectionContacts implements IContact {
     public static ObservableList<Contact> getPersonsList() {
         return personsList;
     }
+
+    public static void addContact(List<List<Contact>> persons) {
+        Connection connection = Connections.getConnection();
+        String query = "INSERT INTO Contacts (Surname, Name, MiddleName, Phone, Email, Country, City, Address, Birthday, Note, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            for (List<Contact> item: persons ) {
+                for (Contact contact : item) {
+                    ps.setString(1, contact.getSurname());
+                    ps.setString(2, contact.getName());
+                    ps.setString(3, contact.getMiddleName());
+                    ps.setString(4, contact.getPhoneNumber());
+                    ps.setString(5, contact.getEmail());
+                    ps.setString(6, contact.getCountry());
+                    ps.setString(7, contact.getCity());
+                    ps.setString(8, contact.getAddress());
+                    ps.setString(9, contact.getBirthday());
+                    ps.setString(10, contact.getPersonNote());
+                    ps.setBytes(11, contact.getPersonImage());
+                    ps.addBatch();
+                }
+                    ps.executeBatch();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        personsList.clear();
+        CollectionContacts.fillContactList();
+
+    }
+
 }

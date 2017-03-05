@@ -1,4 +1,5 @@
 package utils;
+import ezvcard.property.Photo;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import java.io.*;
@@ -21,6 +22,8 @@ public class ConvertData {
         return null;
     }
 
+
+
     public static String convertLocalDateToString(LocalDate birthday) {
         if (birthday == null) {
             return null;
@@ -37,7 +40,7 @@ public class ConvertData {
         return result;
     }
 
-    public static byte[] convertImageToByteArray(Image image) {
+    public static byte[] convertImageToByteArray(Photo image) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutput out = null;
         byte[] result = null;

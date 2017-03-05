@@ -8,7 +8,10 @@ import ezvcard.property.Photo;
 import ezvcard.property.StructuredName;
 import objects.Contact;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class VcardFactory {
 
@@ -17,7 +20,8 @@ public class VcardFactory {
 
         StructuredName name = new StructuredName();
         name.setFamily(contact.getSurname());
-        name.setGiven(contact.getName() + " " + contact.getMiddleName());
+        name.setGiven(contact.getName());
+        name.addAdditional(contact.getMiddleName());
         newVcard.setStructuredName(name);
 
         newVcard.setFormattedName(contact.getSurname() + " " + contact.getName() + " " + contact.getMiddleName());
@@ -45,5 +49,31 @@ public class VcardFactory {
         newVcard.addPhoto(photo);
 
         return newVcard;
+    }
+
+    public static Contact parseVcard (VCard vCard) {
+        Contact newContact = new Contact();
+        StructuredName structuredName = vCard.getStructuredName();
+        //Add checking FIO on NULL
+        newContact.setSurname(structuredName.getFamily() == null ? structuredName.getGiven() : structuredName.getFamily());
+        newContact.setName(structuredName.getGiven() == null ? "" : structuredName.getGiven());
+        newContact.setMiddleName(structuredName.getAdditional().size() == 0 ? "" : structuredName.getAdditional().get(0));
+        newContact.setPhoneNumber(vCard.getTelephoneNumbers().size() == 0 ? "" : vCard.getTelephoneNumbers().get(0).getText());
+        newContact.setEmail(vCard.getEmails().size() == 0? "" : vCard.getEmails().get(0).getValue());
+        List<Address> address = vCard.getAddresses();
+        if (address.size() > 0) {
+            newContact.setCountry(address.get(0).getCountry());
+            newContact.setCity(address.get(0).getLocality());
+            newContact.setAddress(address.get(0).getStreetAddress());
+        }
+        Date date = vCard.getBirthday() == null? null : vCard.getBirthday().getDate();
+        if (date != null) {
+            String birthday = ConvertData.convertLocalDateToString((date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+            newContact.setBirthday(birthday);
+        }
+        newContact.setPersonNote(vCard.getNotes().size() == 0 ? "" : vCard.getNotes().get(0).getValue());
+        byte[] photo = vCard.getPhotos().size() == 0 ? null : vCard.getPhotos().get(0).getData();
+        newContact.setPersonImage(photo);
+        return newContact;
     }
 }

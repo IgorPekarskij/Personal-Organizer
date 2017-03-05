@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class ContactsWindowController {
 
@@ -258,6 +259,31 @@ public class ContactsWindowController {
     }
 
     public void importContacts(ActionEvent actionEvent) {
+        impContacts.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent arg0) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save Contacts");
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VCF files (*.vcf)", "*.vcf");
+                fileChooser.getExtensionFilters().add(extFilter);
+                File file = fileChooser.showOpenDialog(listOfContact.getScene().getWindow());
+                if (file != null) {
+                    try {
+                        List<VCard> vcards = Ezvcard.parse(file).all();
+                        CollectionContacts.addContact(generateContactsList(vcards));
+                    } catch (RuntimeException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Ошибка загрузки");
+                        alert.getDialogPane().setPrefWidth(500);
+                        alert.setHeaderText("Проверьте формат файла");
+                        alert.showAndWait();
+                        ex.printStackTrace();
+                    } catch (IOException e) {
+
+                    }
+                }
+            }
+        });
 
     }
 
@@ -286,5 +312,27 @@ public class ContactsWindowController {
                 }
             }
         });
+    }
+
+    private List<List<Contact>> generateContactsList (List<VCard> cards) {
+        List<List<Contact>> contactsList = new ArrayList<>();
+        List<Contact> contacts = new ArrayList<>();
+        if (cards.size() <= 1000) {
+            for (int i = 0; i < cards.size(); i++) {
+                Contact contact = VcardFactory.parseVcard(cards.get(i));
+                contacts.add(contact);
+            }
+            contactsList.add(contacts);
+        } else {
+            int preferedSize = 0;
+            for (int j = 0; j < cards.size(); j++) {
+                contacts.add(VcardFactory.parseVcard(cards.get(j)));
+                if (++preferedSize >= 1000) {
+                    contactsList.add(contacts);
+                    preferedSize = 0;
+                }
+            }
+        }
+        return contactsList;
     }
 }
