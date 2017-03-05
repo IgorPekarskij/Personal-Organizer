@@ -16,6 +16,12 @@ import java.io.File;
 
 public class CreateNewContactController {
     @FXML
+    private TextField country;
+    @FXML
+    private TextField city;
+    @FXML
+    private TextField address;
+    @FXML
     private ImageView personImage;
     @FXML
     private Button photoOpenButton;
@@ -25,8 +31,6 @@ public class CreateNewContactController {
     private TextField phoneNewContactField;
     @FXML
     private TextField emailNewContactField;
-    @FXML
-    private TextField addressNewContactField;
     @FXML
     private TextField surnameNewContactField;
     @FXML
@@ -53,7 +57,9 @@ public class CreateNewContactController {
             middlnameNewContactField.setText(newPerson.getMiddleName());
             phoneNewContactField.setText(newPerson.getPhoneNumber());
             emailNewContactField.setText(newPerson.getEmail());
-            addressNewContactField.setText(newPerson.getAddress());
+            country.setText(newPerson.getCountry());
+            city.setText(newPerson.getCountry());
+            address.setText(newPerson.getAddress());
             noteTextArea.setText(newPerson.getPersonNote());
             birthdayDataPicker.setValue(ConvertData.convertStringToLocalDate(newPerson.getBirthday()));
             if (newPerson.getPersonImage() != null) {
@@ -69,7 +75,9 @@ public class CreateNewContactController {
             this.newPerson.setMiddleName(middlnameNewContactField.getText().isEmpty() ? " " : middlnameNewContactField.getText());
             this.newPerson.setPhoneNumber(phoneNewContactField.getText().isEmpty() ? " " : phoneNewContactField.getText());
             this.newPerson.setEmail(emailNewContactField.getText().isEmpty() ? " " : emailNewContactField.getText());
-            this.newPerson.setAddress(addressNewContactField.getText().isEmpty() ? " " : addressNewContactField.getText());
+            this.newPerson.setCountry(country.getText().isEmpty() ? " " : country.getText());
+            this.newPerson.setCity(city.getText().isEmpty() ? " " : city.getText());
+            this.newPerson.setAddress(address.getText().isEmpty() ? " " : address.getText());
             this.newPerson.setBirthday(birthdayDataPicker.getValue() == null ? " " : ConvertData.convertLocalDateToString(birthdayDataPicker.getValue()));
             this.newPerson.setPersonNote(noteTextArea.getText().isEmpty() ? " " : noteTextArea.getText());
             this.newPerson.setPersonImage(personImage.getImage() == null ? new byte[0] : tempImage);
@@ -104,7 +112,9 @@ public class CreateNewContactController {
         middlnameNewContactField.setText("");
         phoneNewContactField.setText("");
         emailNewContactField.setText("");
-        addressNewContactField.setText("");
+        country.setText("");
+        city.setText("");
+        address.setText("");
         birthdayDataPicker.setValue(null);
         noteTextArea.setText("");
         personImage.setImage(null);

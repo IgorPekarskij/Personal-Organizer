@@ -14,7 +14,7 @@ public class CollectionContacts implements IContact {
         int personId = -1;
         Connection connection = Connections.getConnection();
         personsList.add(person);
-        String query = "INSERT INTO Contacts (Surname, Name, MiddleName, Phone, Email, Address, Birthday, Note, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Contacts (Surname, Name, MiddleName, Phone, Email, Country, City, Address, Birthday, Note, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
         ResultSet generatedKeys = null;
         try {
@@ -24,10 +24,12 @@ public class CollectionContacts implements IContact {
             ps.setString(3, person.getMiddleName());
             ps.setString(4, person.getPhoneNumber());
             ps.setString(5, person.getEmail());
-            ps.setString(6, person.getAddress());
-            ps.setString(7, person.getBirthday());
-            ps.setString(8, person.getPersonNote());
-            ps.setBytes(9, person.getPersonImage());
+            ps.setString(6, person.getCountry());
+            ps.setString(7, person.getCity());
+            ps.setString(8, person.getAddress());
+            ps.setString(9, person.getBirthday());
+            ps.setString(10, person.getPersonNote());
+            ps.setBytes(11, person.getPersonImage());
             ps.executeUpdate();
             generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -48,7 +50,7 @@ public class CollectionContacts implements IContact {
 
     public static void updateContact(Contact person) {
         Connection connection = Connections.getConnection();
-        String query = "UPDATE Contacts SET Surname = ?, Name = ?, MiddleName = ?, Phone = ?, Email = ?, Address = ?, Birthday = ?, Note = ?, Image = ? WHERE Id = ?";
+        String query = "UPDATE Contacts SET Surname = ?, Name = ?, MiddleName = ?, Phone = ?, Email = ?, Country = ?, City = ?, Address = ?, Birthday = ?, Note = ?, Image = ? WHERE Id = ?";
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement(query);
@@ -57,11 +59,13 @@ public class CollectionContacts implements IContact {
             ps.setString(3, person.getMiddleName());
             ps.setString(4, person.getPhoneNumber());
             ps.setString(5, person.getEmail());
-            ps.setString(6, person.getAddress());
-            ps.setString(7, person.getBirthday());
-            ps.setString(8, person.getPersonNote());
-            ps.setBytes(9, person.getPersonImage());
-            ps.setInt(10, person.getPersonID());
+            ps.setString(6, person.getCountry());
+            ps.setString(7, person.getCity());
+            ps.setString(8, person.getAddress());
+            ps.setString(9, person.getBirthday());
+            ps.setString(10, person.getPersonNote());
+            ps.setBytes(11, person.getPersonImage());
+            ps.setInt(12, person.getPersonID());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,7 +110,8 @@ public class CollectionContacts implements IContact {
             while (resultSet.next()) {
                 personsList.add(new Contact(resultSet.getInt("Id"), resultSet.getString("Surname"), resultSet.getString("Name"),
                         resultSet.getString("MiddleName"), resultSet.getString("Phone"), resultSet.getString("Email"),
-                        resultSet.getString("Address"), resultSet.getString("Birthday"), resultSet.getString("Note"),
+                        resultSet.getString("Country"), resultSet.getString("City"), resultSet.getString("Address"),
+                        resultSet.getString("Birthday"), resultSet.getString("Note"),
                         resultSet.getBytes("Image") == null ? null : resultSet.getBytes("Image")));
             }
         } catch (SQLException e) {

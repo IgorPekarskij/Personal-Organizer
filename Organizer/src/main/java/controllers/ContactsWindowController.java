@@ -1,5 +1,7 @@
 package controllers;
 
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 import interfaces.impls.CollectionContacts;
 import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.FilteredList;
@@ -14,21 +16,31 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import objects.Contact;
 import utils.ConvertData;
+import utils.VcardFactory;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class ContactsWindowController {
+
     private Contact currentPerson;
     private Parent fxmlEdit;
     private FXMLLoader fxmlLoader;
     private CreateNewContactController createNewContact;
     private Stage editDialogStage;
     private static boolean addPerson = true;
+    @FXML
+    private MenuItem impContacts;
+    @FXML
+    private MenuItem expContacts;
     @FXML
     private TextField contactSearchField;
     @FXML
@@ -131,7 +143,7 @@ public class ContactsWindowController {
         fioCurrentContact.setText(currentPerson.getSurname() + " " + currentPerson.getName() + " " + currentPerson.getMiddleName());
         telephoneCurrentContact.setText(currentPerson.getPhoneNumber());
         emailCurrentContact.setText(currentPerson.getEmail());
-        addressCurrentContact.setText(currentPerson.getAddress());
+        addressCurrentContact.setText(currentPerson.getCountry() + ", " + currentPerson.getCity() + ", " + currentPerson.getAddress());
         birthdayCurrentContact.setText(currentPerson.getBirthday());
         noteCurrentContact.setText(currentPerson.getPersonNote());
         contactImage.setImage(ConvertData.convertToImage(currentPerson.getPersonImage()));
@@ -243,5 +255,36 @@ public class ContactsWindowController {
     public void changeUser(ActionEvent actionEvent) throws IOException {
         Parent registerUser = FXMLLoader.load(getClass().getResource("/fxmls/registartionForm.fxml"));
         LoginWindowController.changeUserWindow(registerUser, listOfContact);
+    }
+
+    public void importContacts(ActionEvent actionEvent) {
+
+    }
+
+    public void exportContacts(ActionEvent actionEvent) {
+        expContacts.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent arg0) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save Contacts");
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VCF files (*.vcf)", "*.vcf");
+                fileChooser.getExtensionFilters().add(extFilter);
+                File file = fileChooser.showSaveDialog(listOfContact.getScene().getWindow());
+                if (file != null) {
+                    Collection<VCard> vcards = new ArrayList<VCard>();
+                    for (Contact item: CollectionContacts.getPersonsList()) {
+                        vcards.add(VcardFactory.createVcard(item));
+                    }
+                    if (!file.getName().endsWith(".vcf")) {
+                        file = new File(file.getAbsolutePath() + ".vcf");
+                    }
+                    try {
+                        Ezvcard.write(vcards).go(file);
+                    } catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+            }
+        });
     }
 }

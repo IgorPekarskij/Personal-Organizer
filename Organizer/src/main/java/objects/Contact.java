@@ -11,6 +11,8 @@ public class Contact {
     private SimpleStringProperty middleName = new SimpleStringProperty("");
     private SimpleStringProperty phoneNumber = new SimpleStringProperty("");
     private SimpleStringProperty email = new SimpleStringProperty("");
+    private SimpleStringProperty country = new SimpleStringProperty("");
+    private SimpleStringProperty city = new SimpleStringProperty("");
     private SimpleStringProperty address = new SimpleStringProperty("");
     private SimpleStringProperty birthday = new SimpleStringProperty("");
     private SimpleStringProperty personNote = new SimpleStringProperty("");
@@ -19,13 +21,15 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(int id, String surname, String name, String middleName, String phoneNumber, String email, String address, String birthday, String personNote, byte[] image) {
+    public Contact(int id, String surname, String name, String middleName, String phoneNumber, String email, String country, String city, String address, String birthday, String personNote, byte[] image) {
         this.personID = new SimpleIntegerProperty(id);
         this.surname = new SimpleStringProperty(surname);
         this.name = new SimpleStringProperty(name);
         this.middleName = new SimpleStringProperty(middleName);
         this.phoneNumber = new SimpleStringProperty(phoneNumber);
         this.email = new SimpleStringProperty(email);
+        this.country = new SimpleStringProperty(country);
+        this.city = new SimpleStringProperty(city);
         this.address = new SimpleStringProperty(address);
         this.birthday = new SimpleStringProperty(birthday);
         this.personNote = new SimpleStringProperty(personNote);
@@ -137,6 +141,30 @@ public class Contact {
 
     public void setEmail(String email) {
         this.email.set(email);
+    }
+
+    public String getCountry() {
+        return country.get();
+    }
+
+    public SimpleStringProperty countryProperty() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country.set(country);
+    }
+
+    public String getCity() {
+        return city.get();
+    }
+
+    public SimpleStringProperty cityProperty() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city.set(city);
     }
 
     public String getAddress() {
