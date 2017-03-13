@@ -2,10 +2,14 @@ package utils;
 import ezvcard.property.Photo;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import net.fortuna.ical4j.model.DateTime;
+
 import java.io.*;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.concurrent.TimeUnit;
 
 public class ConvertData {
     private static final String DATE_PATTERN = "dd.MM.yyyy";
@@ -95,5 +99,17 @@ public class ConvertData {
             return time.split(":")[0];
         }
         return null;
+    }
+
+    public static String convertMillisecondsInHoursAndMinutes(DateTime seconds) {
+        long time = seconds.getTime();
+        long days = TimeUnit.MILLISECONDS.toDays(time);
+        time -= TimeUnit.DAYS.toMillis(days);
+        long hours = TimeUnit.MILLISECONDS.toHours(time);
+        time -= TimeUnit.HOURS.toMillis(hours);
+        long min = TimeUnit.MILLISECONDS.toMinutes(time);
+        String hour = Long.toString(hours).length() == 1 ? "0"+hours : Long.toString(hours);
+        String minutes = Long.toString(min).length() == 1 ? min+"0" : Long.toString(min);
+        return hour + ":" + minutes;
     }
 }

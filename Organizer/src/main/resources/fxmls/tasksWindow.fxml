@@ -32,6 +32,8 @@
                             <items>
                                 <MenuItem fx:id="toWelcomeItem" mnemonicParsing="false" onAction="#toWelcome" text="К окну приветствия" />
                                 <MenuItem fx:id="changeCredential" mnemonicParsing="false" onAction="#changeUser" text="Сменить логи и пароль" />
+                                <MenuItem fx:id="importTasks" mnemonicParsing="false" onAction="#importTask" text="Импортировать задачи" />
+                                <MenuItem fx:id="exportTasks" mnemonicParsing="false" onAction="#exportTask" text="Экспортировать задачи" />
                                 <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#exitApplication" text="Выйти" />
                             </items>
                         </Menu>

@@ -23,7 +23,6 @@ import javafx.stage.WindowEvent;
 import objects.Contact;
 import utils.ConvertData;
 import utils.VcardFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -221,7 +220,6 @@ public class ContactsWindowController {
                 @Override
                 public void handle(WindowEvent event) {
                     event.consume();
-
                 }
             });
         }
@@ -317,16 +315,22 @@ public class ContactsWindowController {
     private List<List<Contact>> generateContactsList (List<VCard> cards) {
         List<List<Contact>> contactsList = new ArrayList<>();
         List<Contact> contacts = new ArrayList<>();
+        Contact contact = null;
         if (cards.size() <= 1000) {
             for (int i = 0; i < cards.size(); i++) {
-                Contact contact = VcardFactory.parseVcard(cards.get(i));
-                contacts.add(contact);
+                contact = VcardFactory.parseVcard(cards.get(i));
+                if (contact != null) {
+                    contacts.add(contact);
+                }
             }
             contactsList.add(contacts);
         } else {
             int preferedSize = 0;
             for (int j = 0; j < cards.size(); j++) {
-                contacts.add(VcardFactory.parseVcard(cards.get(j)));
+                contact = VcardFactory.parseVcard(cards.get(j));
+                if (contact != null) {
+                    contacts.add(contact);
+                }
                 if (++preferedSize >= 1000) {
                     contactsList.add(contacts);
                     preferedSize = 0;

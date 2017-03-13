@@ -3,10 +3,11 @@ package interfaces.impls;
 import interfaces.ITask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import objects.Task;
 import utils.Connections;
-
 import java.sql.*;
+import java.util.List;
 
 public class CollectionTasks implements ITask {
 
@@ -94,7 +95,7 @@ public class CollectionTasks implements ITask {
         }
     }
 
-    public void fillTaskList() {
+    public static void fillTaskList() {
         Connection connection = Connections.getConnection();
         Statement statement = null;
         ResultSet resultSet = null;
@@ -124,4 +125,38 @@ public class CollectionTasks implements ITask {
     public static ObservableList<Task> getTaskList() {
         return taskList;
     }
+
+    public static void addTask(List<List<Task>> tasks) {
+    Connection connection = Connections.getConnection();
+    int countTasks = 0;
+    String query = "INSERT INTO Tasks (Name, Description, StartDate, EndDate, StartTime, EndTime, Image, Completed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+        PreparedStatement ps = connection.prepareStatement(query);
+        for (List<Task> item: tasks ) {
+            for (Task task : item) {
+                countTasks++;
+                ps.setString(1, task.getName());
+                ps.setString(2, task.getDescription());
+                ps.setString(3, task.getStartDate());
+                ps.setString(4, task.getEndDate());
+                ps.setString(5, task.getStartTime());
+                ps.setString(6, task.getEndTime());
+                ps.setBytes(7, task.getTaskImage());
+                ps.setBoolean(8, task.isCompleted());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Задачи импортированы");
+        alert.getDialogPane().setPrefWidth(500);
+        alert.setHeaderText("Загружено " + countTasks + " задач!");
+        alert.showAndWait();
+        taskList.clear();
+        fillTaskList();
+
+}
 }

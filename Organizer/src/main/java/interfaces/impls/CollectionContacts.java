@@ -3,6 +3,7 @@ package interfaces.impls;
 import interfaces.IContact;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import objects.Contact;
 import utils.Connections;
 import utils.ConvertData;
@@ -136,11 +137,13 @@ public class CollectionContacts implements IContact {
 
     public static void addContact(List<List<Contact>> persons) {
         Connection connection = Connections.getConnection();
+        int countContacts = 0;
         String query = "INSERT INTO Contacts (Surname, Name, MiddleName, Phone, Email, Country, City, Address, Birthday, Note, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             for (List<Contact> item: persons ) {
                 for (Contact contact : item) {
+                    countContacts++;
                     ps.setString(1, contact.getSurname());
                     ps.setString(2, contact.getName());
                     ps.setString(3, contact.getMiddleName());
@@ -159,6 +162,11 @@ public class CollectionContacts implements IContact {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Контакты импортированы");
+        alert.getDialogPane().setPrefWidth(500);
+        alert.setHeaderText("Загружено " + countContacts + " контактов!");
+        alert.showAndWait();
         personsList.clear();
         CollectionContacts.fillContactList();
 

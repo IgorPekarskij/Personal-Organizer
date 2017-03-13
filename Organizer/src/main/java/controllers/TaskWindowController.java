@@ -14,15 +14,20 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import net.fortuna.ical4j.data.CalendarBuilder;
+import net.fortuna.ical4j.data.CalendarOutputter;
+import net.fortuna.ical4j.data.ParserException;
+import net.fortuna.ical4j.model.Calendar;
 import objects.Task;
+import utils.CalendarGenerator;
 import utils.ConvertData;
-
-import java.io.IOException;
+import java.io.*;
+import java.util.List;
 
 public class TaskWindowController {
-
     private CollectionTasks collectionTasks = new CollectionTasks();
     private ContactsWindowController contactsController = new ContactsWindowController();
     private CreateNewTaskController createNewTask = new CreateNewTaskController();
@@ -31,6 +36,10 @@ public class TaskWindowController {
     public static boolean addTask;
     public static boolean newTask = true;
     private Stage editDialogStage;
+    @FXML
+    private MenuItem importTasks;
+    @FXML
+    private MenuItem exportTasks;
     @FXML
     private TableColumn completedColumn;
     @FXML
@@ -254,5 +263,69 @@ public class TaskWindowController {
 
     public static boolean isNewTask() {
         return newTask;
+    }
+
+
+    public void importTask(ActionEvent actionEvent) {
+
+        importTasks.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent arg0) {
+                FileInputStream fin = null;
+                CalendarBuilder builder = new CalendarBuilder();
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save Tasks");
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ics files (*.ics)", "*.ics");
+                fileChooser.getExtensionFilters().add(extFilter);
+                File file = fileChooser.showOpenDialog(listOfTasks.getScene().getWindow());
+                if (file != null) {
+                    try {
+                        fin = new FileInputStream(file);
+                        Calendar calendar = builder.build(fin);
+                       // System.out.println(calendar);
+                        List<List<Task>> tasks = CalendarGenerator.createTasksFromIcal(calendar);
+                        CollectionTasks.addTask(tasks);
+                    } catch (ParserException e) {
+                        e.printStackTrace();
+                    } catch (RuntimeException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Ошибка загрузки");
+                        alert.getDialogPane().setPrefWidth(500);
+                        alert.setHeaderText("Проверьте формат файла");
+                        alert.showAndWait();
+                        ex.printStackTrace();
+                    } catch (IOException e) {
+
+                    }
+                }
+            }
+        });
+    }
+
+    public void exportTask(ActionEvent actionEvent) {
+        exportTasks.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent arg0) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save Contacts");
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ics files (*.ics)", "*.ics");
+                fileChooser.getExtensionFilters().add(extFilter);
+                File file = fileChooser.showSaveDialog(listOfTasks.getScene().getWindow());
+                if (file != null) {
+                    Calendar calendar = CalendarGenerator.generateCalendar(CollectionTasks.getTaskList());
+                    if (!file.getName().endsWith(".ics")) {
+                        file = new File(file.getAbsolutePath() + ".ics");
+                    }
+                    try {
+                        FileOutputStream fout = new FileOutputStream(file);
+                        CalendarOutputter outputter = new CalendarOutputter();
+                        outputter.setValidating(false);
+                        outputter.output(calendar, fout);
+                    } catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+            }
+        });
     }
 }
