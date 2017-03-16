@@ -25,9 +25,11 @@ import objects.Task;
 import utils.CalendarGenerator;
 import utils.ConvertData;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskWindowController {
+
     private CollectionTasks collectionTasks = new CollectionTasks();
     private ContactsWindowController contactsController = new ContactsWindowController();
     private CreateNewTaskController createNewTask = new CreateNewTaskController();
@@ -36,6 +38,8 @@ public class TaskWindowController {
     public static boolean addTask;
     public static boolean newTask = true;
     private Stage editDialogStage;
+    @FXML
+    private MenuItem exportSelectedTask;
     @FXML
     private MenuItem importTasks;
     @FXML
@@ -313,6 +317,35 @@ public class TaskWindowController {
                 File file = fileChooser.showSaveDialog(listOfTasks.getScene().getWindow());
                 if (file != null) {
                     Calendar calendar = CalendarGenerator.generateCalendar(CollectionTasks.getTaskList());
+                    if (!file.getName().endsWith(".ics")) {
+                        file = new File(file.getAbsolutePath() + ".ics");
+                    }
+                    try {
+                        FileOutputStream fout = new FileOutputStream(file);
+                        CalendarOutputter outputter = new CalendarOutputter();
+                        outputter.setValidating(false);
+                        outputter.output(calendar, fout);
+                    } catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+            }
+        });
+    }
+
+    public void exportSelectedTask(ActionEvent actionEvent) {
+        exportSelectedTask.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent arg0) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save Contacts");
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ics files (*.ics)", "*.ics");
+                fileChooser.getExtensionFilters().add(extFilter);
+                File file = fileChooser.showSaveDialog(listOfTasks.getScene().getWindow());
+                if (file != null) {
+                    List<Task> task = new ArrayList<>();
+                    task.add((Task) listOfTasks.getSelectionModel().getSelectedItem());
+                    Calendar calendar = CalendarGenerator.generateCalendar(task);
                     if (!file.getName().endsWith(".ics")) {
                         file = new File(file.getAbsolutePath() + ".ics");
                     }

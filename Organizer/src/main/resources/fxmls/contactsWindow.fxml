@@ -34,6 +34,7 @@
                                 <MenuItem fx:id="toWelcomeWindow" mnemonicParsing="false" onAction="#toWelcome" text="К окну приветствия" />
                                 <MenuItem fx:id="changeCredential" mnemonicParsing="false" onAction="#changeUser" text="Сменить логи и пароль" />
                         <MenuItem fx:id="impContacts" mnemonicParsing="false" onAction="#importContacts" text="Импортировать контакты" />
+                        <MenuItem fx:id="expSelectedContact" mnemonicParsing="false" onAction="#exportSelectedContact" text="Экспортировать выбранный контакты" />
                         <MenuItem fx:id="expContacts" mnemonicParsing="false" onAction="#exportContacts" text="Экспортировать контакты" />
                                 <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#exitApplication" text="Выйти" />
                             </items>

@@ -31,12 +31,15 @@ import java.util.List;
 
 public class ContactsWindowController {
 
+
     private Contact currentPerson;
     private Parent fxmlEdit;
     private FXMLLoader fxmlLoader;
     private CreateNewContactController createNewContact;
     private Stage editDialogStage;
     private static boolean addPerson = true;
+    @FXML
+    private MenuItem expSelectedContact;
     @FXML
     private MenuItem impContacts;
     @FXML
@@ -338,5 +341,30 @@ public class ContactsWindowController {
             }
         }
         return contactsList;
+    }
+
+    public void exportSelectedContact(ActionEvent actionEvent) {
+        expSelectedContact.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent arg0) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save Contacts");
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VCF files (*.vcf)", "*.vcf");
+                fileChooser.getExtensionFilters().add(extFilter);
+                File file = fileChooser.showSaveDialog(listOfContact.getScene().getWindow());
+                if (file != null) {
+                    VCard vcards = VcardFactory.createVcard((Contact) listOfContact.getSelectionModel().getSelectedItem());
+                    if (!file.getName().endsWith(".vcf")) {
+                        file = new File(file.getAbsolutePath() + ".vcf");
+                    }
+                    try {
+                        Ezvcard.write(vcards).go(file);
+                    } catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+            }
+        });
+
     }
 }
