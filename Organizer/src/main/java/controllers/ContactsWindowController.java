@@ -103,6 +103,9 @@ public class ContactsWindowController {
         sortedList.comparatorProperty().bind(listOfContact.comparatorProperty());
         listOfContact.setItems(sortedList);
         updateCountLabel();
+        exportContacts();
+        exportSelectedContact();
+        importContacts();
     }
 
     private void fillData() {
@@ -259,7 +262,7 @@ public class ContactsWindowController {
         LoginWindowController.changeUserWindow(registerUser, listOfContact);
     }
 
-    public void importContacts(ActionEvent actionEvent) {
+    public void importContacts() {
         impContacts.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
@@ -288,7 +291,7 @@ public class ContactsWindowController {
 
     }
 
-    public void exportContacts(ActionEvent actionEvent) {
+    public void exportContacts() {
         expContacts.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
@@ -343,7 +346,7 @@ public class ContactsWindowController {
         return contactsList;
     }
 
-    public void exportSelectedContact(ActionEvent actionEvent) {
+    public void exportSelectedContact() {
         expSelectedContact.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {

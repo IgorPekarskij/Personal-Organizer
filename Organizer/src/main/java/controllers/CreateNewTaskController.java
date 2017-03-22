@@ -49,6 +49,7 @@ public class CreateNewTaskController {
         handlePickDateTime(newTaskStartMin);
         handlePickDateTime(newTaskEndHour);
         handlePickDateTime(newTaskEndMin);
+        addFileToTask();
     }
 
     private void handlePickDateTime(SplitMenuButton spmb) {
@@ -107,7 +108,7 @@ public class CreateNewTaskController {
         completedTaskCheckBox.setSelected(false);
     }
 
-    public void addFileToTask(ActionEvent actionEvent) {
+    public void addFileToTask() {
         newContactController.chooseImage(attacheFileTaskButton, newTaskAttacheImageView);
     }
 

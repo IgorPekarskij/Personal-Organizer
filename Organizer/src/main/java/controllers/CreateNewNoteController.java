@@ -29,6 +29,11 @@ public class CreateNewNoteController {
     private CreateNewContactController newContactController;
     private NotesWindowController notesWindowController;
 
+    @FXML
+    private void initialize() {
+        addFileToNotes();
+    }
+
     public CreateNewNoteController() {
         newContactController = new CreateNewContactController();
         notesWindowController = new NotesWindowController();
@@ -82,7 +87,7 @@ public class CreateNewNoteController {
         newNoteDate.setValue(null);
     }
 
-    public void addFileToNotes(ActionEvent actionEvent) {
+    public void addFileToNotes() {
         newContactController.chooseImage(attacheFileNoteButton, newNoteAttacheImageView);
     }
 

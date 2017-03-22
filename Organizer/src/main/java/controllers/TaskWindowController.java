@@ -138,6 +138,9 @@ public class TaskWindowController {
         sortedList.comparatorProperty().bind(listOfTasks.comparatorProperty());
         listOfTasks.setItems(sortedList);
         updateCountLabel();
+        exportTask();
+        exportSelectedTask();
+        importTask();
     }
 
     private void initListeners() {
@@ -270,7 +273,7 @@ public class TaskWindowController {
     }
 
 
-    public void importTask(ActionEvent actionEvent) {
+    public void importTask() {
 
         importTasks.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -306,16 +309,19 @@ public class TaskWindowController {
         });
     }
 
-    public void exportTask(ActionEvent actionEvent) {
+    public void exportTask() {
+        System.out.println("Export");
         exportTasks.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
                 FileChooser fileChooser = new FileChooser();
+                System.out.println("fileChooser");
                 fileChooser.setTitle("Save Contacts");
                 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ics files (*.ics)", "*.ics");
                 fileChooser.getExtensionFilters().add(extFilter);
                 File file = fileChooser.showSaveDialog(listOfTasks.getScene().getWindow());
                 if (file != null) {
+                    System.out.println("file");
                     Calendar calendar = CalendarGenerator.generateCalendar(CollectionTasks.getTaskList());
                     if (!file.getName().endsWith(".ics")) {
                         file = new File(file.getAbsolutePath() + ".ics");
@@ -333,7 +339,7 @@ public class TaskWindowController {
         });
     }
 
-    public void exportSelectedTask(ActionEvent actionEvent) {
+    public void exportSelectedTask() {
         exportSelectedTask.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {

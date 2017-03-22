@@ -45,6 +45,11 @@ public class CreateNewContactController {
 
     private byte[] tempImage = null;
 
+    @FXML
+    private void initialize() {
+        chooseImage(photoOpenButton, personImage);
+    }
+
     public Contact getNewPerson() {
         return newPerson;
     }
@@ -140,13 +145,17 @@ public class CreateNewContactController {
                 choose.getExtensionFilters().addAll(
                         new FileChooser.ExtensionFilter("All Images", "*.*"),
                         new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                        new FileChooser.ExtensionFilter("PNG", "*.png")
+                        new FileChooser.ExtensionFilter("PNG", "*.png"),
+                        new FileChooser.ExtensionFilter("BMP", "*.bmp"),
+                        new FileChooser.ExtensionFilter("GIF", "*.gif")
                 );
-                File file = choose.showOpenDialog(button.getScene().getWindow());
-                if (file != null) {
-                    byte[] bImage = ConvertData.convertFileToByteArray(file);
-                    setTempImage(bImage);
-                    imageView.setImage(ConvertData.convertToImage(bImage));
+                if (button != null) {
+                    File file = choose.showOpenDialog(button.getScene().getWindow());
+                    if (file != null) {
+                        byte[] bImage = ConvertData.convertFileToByteArray(file);
+                        setTempImage(bImage);
+                        imageView.setImage(ConvertData.convertToImage(bImage));
+                    }
                 }
             }
         });
