@@ -124,11 +124,9 @@ public class TaskWindowController {
                 if (newValue == null) {
                     return true;
                 }
-                String dateToString = ConvertData.convertLocalDateToString(newValue);
-                if (task.getStartDate().contains(dateToString)) {
-                    return true;
-                }
-                if (task.getEndDate().contains(dateToString)) {
+
+                if (newValue.compareTo(ConvertData.convertStringToLocalDate(task.getStartDate())) >= 0 &&
+                    newValue.compareTo(ConvertData.convertStringToLocalDate(task.getEndDate())) <= 0) {
                     return true;
                 }
                 return false;

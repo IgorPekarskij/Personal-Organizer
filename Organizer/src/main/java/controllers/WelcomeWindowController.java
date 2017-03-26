@@ -1,5 +1,6 @@
 package controllers;
 
+import interfaces.impls.CollectionTasks;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,10 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import utils.ConvertData;
 
 import java.io.IOException;
 
 public class WelcomeWindowController {
+    @FXML
+    private Label countTasks;
+    @FXML
+    private Label taskToday;
     @FXML
     private Label welcomeLabel;
     @FXML
@@ -27,6 +33,8 @@ public class WelcomeWindowController {
     @FXML
     private void initialize() {
         welcomeLabel.setText("Добро пожаловать, " + LoginWindowController.getUser().getCurrentUser().getUserName());
+        countTasks.setText("Выполнено задач: " + ConvertData.countCompletedTasks() + " из " + CollectionTasks.getTaskList().size());
+        taskToday.setText("Задач на сегодня: " + ConvertData.countTodayTasks());
     }
 
     public void exitApplication(ActionEvent event) {

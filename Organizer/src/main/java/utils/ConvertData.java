@@ -1,8 +1,11 @@
 package utils;
+import controllers.TaskWindowController;
 import ezvcard.property.Photo;
+import interfaces.impls.CollectionTasks;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import net.fortuna.ical4j.model.DateTime;
+import objects.Task;
 
 import java.io.*;
 import java.text.ParseException;
@@ -111,5 +114,30 @@ public class ConvertData {
         String hour = Long.toString(hours).length() == 1 ? "0"+hours : Long.toString(hours);
         String minutes = Long.toString(min).length() == 1 ? min+"0" : Long.toString(min);
         return hour + ":" + minutes;
+    }
+
+    public static int countCompletedTasks() {
+        int completedTasks = 0;
+        for (Task item : CollectionTasks.getTaskList()) {
+            if (item.isCompleted()) {
+                completedTasks++;
+            }
+        }
+        return completedTasks;
+    }
+
+    public static int countTodayTasks() {
+        int tasks = 0;
+        LocalDate today = LocalDate.now();
+        int start;
+        int end;
+        for (Task item : CollectionTasks.getTaskList()) {
+            start = today.compareTo(convertStringToLocalDate(item.getStartDate()));
+            end = today.compareTo(convertStringToLocalDate(item.getEndDate()));
+            if (!item.isCompleted() && start >= 0 && end <= 0) {
+                tasks++;
+            }
+        }
+        return tasks;
     }
 }
