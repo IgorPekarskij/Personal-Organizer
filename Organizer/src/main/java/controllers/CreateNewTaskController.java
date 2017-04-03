@@ -125,7 +125,7 @@ public class CreateNewTaskController {
         } else {
             this.newTask.setName(newTaskNameField.getText());
             this.newTask.setStartDate(newTaskStartDate.getValue() == null ? ConvertData.convertLocalDateToString(LocalDate.now()) : ConvertData.convertLocalDateToString(newTaskStartDate.getValue()));
-            this.newTask.setEndDate(newTaskEndDate.getValue() == null ? "" : ConvertData.convertLocalDateToString(newTaskEndDate.getValue()));
+            this.newTask.setEndDate(newTaskEndDate.getValue() == null ? ConvertData.convertLocalDateToString(LocalDate.now()) : ConvertData.convertLocalDateToString(newTaskEndDate.getValue()));
             this.newTask.setStartTime((newTaskStartHour.getText().equals(hoursDefault) ? hoursDefaultValue : newTaskStartHour.getText()) + ":" + (newTaskStartMin.getText().equals(minutesDefault) ? minutesDefaultValue : newTaskStartMin.getText()));
             this.newTask.setEndTime((newTaskEndHour.getText().equals(hoursDefault) ? hoursDefaultValue : newTaskEndHour.getText()) + ":" + (newTaskEndMin.getText().equals(minutesDefault) ? minutesDefaultValue : newTaskEndMin.getText()));
             this.newTask.setDescription(newTaskDetailTextArea.getText().isEmpty() ? "" : newTaskDetailTextArea.getText());
