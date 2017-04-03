@@ -41,8 +41,8 @@ public class ContactsWindowController {
     private String exportContactTitle = "Экспорт контактов";
     private String confirmationDeleteMessage = "Вы действительно хотите удалить контакт?";
     private String confirmationDeleteTitle = "Удаление контакта!";
-    private String filesWithExtension = "*.vfc";
-    private String fileExtension = ".vfc";
+    private String filesWithExtension = "*.vcf";
+    private String fileExtension = ".vcf";
     private String chooseTaskMessage = "Выберите задачу!";
     private static String confirmButtonLabel = "Да";
     private static String declineButtonLabel = "Нет";
