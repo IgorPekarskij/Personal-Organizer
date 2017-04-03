@@ -78,15 +78,10 @@ public class CalendarGenerator {
     }
 
     public static List<List<Task>> createTasksFromIcal(Calendar calendar) {
-        System.out.println("TEst");
             List<List<Task>> tasksList = new ArrayList<>();
             List<Task> tasks = new ArrayList<>();
             List<VEvent> vEvents = calendar.getComponents(Component.VEVENT);
             Task task = null;
-        for (int i = 0; i < vEvents.size(); i++) {
-            System.out.println(vEvents.get(i));
-        }
-
             if (vEvents.size() <= 1000) {
                 for (int i = 0; i < vEvents.size(); i++) {
                     task = parseVevent(vEvents.get(i));

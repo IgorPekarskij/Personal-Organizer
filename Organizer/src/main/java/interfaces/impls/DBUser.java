@@ -26,7 +26,6 @@ public class DBUser implements IUser {
             resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 currentUser = new User(resultSet.getString("Login"), resultSet.getString("Password"), resultSet.getString("UserName"));
-                System.out.println(currentUser);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package controllers;
 
+import interfaces.impls.CollectionContacts;
 import interfaces.impls.CollectionTasks;
 import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.FilteredList;
@@ -13,6 +14,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -34,10 +37,21 @@ public class TaskWindowController {
     private ContactsWindowController contactsController = new ContactsWindowController();
     private CreateNewTaskController createNewTask = new CreateNewTaskController();
     private Parent fxmlEdit;
+    private Stage editDialogStage;
+    private String confirmDeleteTitle = "Удаление задачи!";
+    private String confirmDeleteMessage = "Вы действительно хотите удалить задачу?";
+    private String chooseTaskMessage = "Выберите задачу!";
+    private String exportTaskTitle = "Экспорт задач";
+    private String importTaskTitle = "Импортирование задач";
+    private String filesWithExtension = "*.ics";
+    private String fileExtension = ".ics";
     private FXMLLoader fxmlLoader;
     public static boolean addTask;
     public static boolean newTask = true;
-    private Stage editDialogStage;
+    @FXML
+    private Label taskLoadLabel;
+    @FXML
+    private ImageView taskSpinner;
     @FXML
     private MenuItem exportSelectedTask;
     @FXML
@@ -211,7 +225,7 @@ public class TaskWindowController {
     }
 
     private void updateCountLabel() {
-        countSelectedItemLabel.textProperty().bind(Bindings.size(listOfTasks.getItems()).asString("Найдено %s записей"));
+        countSelectedItemLabel.textProperty().bind(Bindings.size(listOfTasks.getItems()).asString(ContactsWindowController.getFoundedRecords()));
     }
 
     public static void setAddTask(boolean addTask) {
@@ -222,9 +236,8 @@ public class TaskWindowController {
         int rowNumber = listOfTasks.getSelectionModel().getSelectedIndex();
         if (rowNumber < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Органайзер");
             alert.getDialogPane().setPrefWidth(500);
-            alert.setHeaderText("Выберите задачу!");
+            alert.setHeaderText(chooseTaskMessage);
             alert.showAndWait();
         } else {
             Task currentTask = (Task) listOfTasks.getSelectionModel().getSelectedItem();
@@ -238,18 +251,16 @@ public class TaskWindowController {
         int rowNumber = listOfTasks.getSelectionModel().getSelectedIndex();
         if (rowNumber < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Органайзер");
             alert.getDialogPane().setPrefWidth(500);
-            alert.setHeaderText("Выберите задачу!");
+            alert.setHeaderText(chooseTaskMessage);
             alert.showAndWait();
         } else {
-            ButtonType ok = new ButtonType("Да", ButtonBar.ButtonData.YES);
-            ButtonType no = new ButtonType("Нет", ButtonBar.ButtonData.NO);
-            Alert confirmExit = new Alert(Alert.AlertType.CONFIRMATION, "Вы действительно хотите удалить задачу?", ok, no);
-            confirmExit.setHeaderText("");
-            confirmExit.setTitle("Удаление задачи!");
-            confirmExit.showAndWait();
-            if (confirmExit.getResult() == ok) {
+            ButtonType ok = new ButtonType(ContactsWindowController.getConfirmButtonLabel(), ButtonBar.ButtonData.YES);
+            ButtonType no = new ButtonType(ContactsWindowController.getDeclineButtonLabel(), ButtonBar.ButtonData.NO);
+            Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION, confirmDeleteMessage, ok, no);
+            confirmDelete.setTitle(confirmDeleteTitle);
+            confirmDelete.showAndWait();
+            if (confirmDelete.getResult() == ok) {
                 CollectionTasks.deleteTask((Task) listOfTasks.getSelectionModel().getSelectedItem());
             }
         }
@@ -276,53 +287,56 @@ public class TaskWindowController {
         importTasks.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
+                taskLoadLabel.setText(importTaskTitle);
+                taskSpinner.setImage(new Image(CollectionContacts.class.getResource("/pictures/spinner.gif").toExternalForm()));
                 FileInputStream fin = null;
                 CalendarBuilder builder = new CalendarBuilder();
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save Tasks");
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ics files (*.ics)", "*.ics");
+                fileChooser.setTitle(importTaskTitle);
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ics files (" + filesWithExtension +  ")", filesWithExtension);
                 fileChooser.getExtensionFilters().add(extFilter);
                 File file = fileChooser.showOpenDialog(listOfTasks.getScene().getWindow());
                 if (file != null) {
                     try {
                         fin = new FileInputStream(file);
                         Calendar calendar = builder.build(fin);
-                       // System.out.println(calendar);
                         List<List<Task>> tasks = CalendarGenerator.createTasksFromIcal(calendar);
                         CollectionTasks.addTask(tasks);
+                        taskLoadLabel.setText(ContactsWindowController.getEmptyString());
+                        taskSpinner.setImage(null);
                     } catch (ParserException e) {
                         e.printStackTrace();
                     } catch (RuntimeException ex) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Ошибка загрузки");
+                        alert.setTitle(ContactsWindowController.getErrorLoadAlertTitle());
                         alert.getDialogPane().setPrefWidth(500);
-                        alert.setHeaderText("Проверьте формат файла");
+                        alert.setHeaderText(ContactsWindowController.getErrorLoadAlertMessage());
                         alert.showAndWait();
                         ex.printStackTrace();
                     } catch (IOException e) {
 
                     }
+                } else {
+                    taskLoadLabel.setText(ContactsWindowController.getEmptyString());
+                    taskSpinner.setImage(null);
                 }
             }
         });
     }
 
     public void exportTask() {
-        System.out.println("Export");
         exportTasks.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
                 FileChooser fileChooser = new FileChooser();
-                System.out.println("fileChooser");
-                fileChooser.setTitle("Save Contacts");
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ics files (*.ics)", "*.ics");
+                fileChooser.setTitle(exportTaskTitle);
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ics files (" + filesWithExtension +  ")", filesWithExtension);
                 fileChooser.getExtensionFilters().add(extFilter);
                 File file = fileChooser.showSaveDialog(listOfTasks.getScene().getWindow());
                 if (file != null) {
-                    System.out.println("file");
                     Calendar calendar = CalendarGenerator.generateCalendar(CollectionTasks.getTaskList());
-                    if (!file.getName().endsWith(".ics")) {
-                        file = new File(file.getAbsolutePath() + ".ics");
+                    if (!file.getName().endsWith(fileExtension)) {
+                        file = new File(file.getAbsolutePath() + fileExtension);
                     }
                     try {
                         FileOutputStream fout = new FileOutputStream(file);
@@ -342,16 +356,16 @@ public class TaskWindowController {
             @Override
             public void handle(ActionEvent arg0) {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save Contacts");
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ics files (*.ics)", "*.ics");
+                fileChooser.setTitle(exportTaskTitle);
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ics files (" + filesWithExtension +  ")", filesWithExtension);
                 fileChooser.getExtensionFilters().add(extFilter);
                 File file = fileChooser.showSaveDialog(listOfTasks.getScene().getWindow());
                 if (file != null) {
                     List<Task> task = new ArrayList<>();
                     task.add((Task) listOfTasks.getSelectionModel().getSelectedItem());
                     Calendar calendar = CalendarGenerator.generateCalendar(task);
-                    if (!file.getName().endsWith(".ics")) {
-                        file = new File(file.getAbsolutePath() + ".ics");
+                    if (!file.getName().endsWith(fileExtension)) {
+                        file = new File(file.getAbsolutePath() + fileExtension);
                     }
                     try {
                         FileOutputStream fout = new FileOutputStream(file);

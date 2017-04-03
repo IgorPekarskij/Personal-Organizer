@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import objects.Contact;
 import utils.Connections;
-import utils.ConvertData;
-
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionContacts implements IContact {

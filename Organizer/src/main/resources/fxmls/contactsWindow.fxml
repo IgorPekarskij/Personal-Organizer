@@ -63,6 +63,8 @@
                                         <Image url="@../pictures/Zoom.png" />
                                     </image>
                                 </ImageView>
+                        <ImageView fx:id="loadContactsSpinner" fitHeight="60.0" fitWidth="85.0" layoutX="901.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="loadContactsLabel" layoutX="694.0" layoutY="18.0" prefHeight="25.0" prefWidth="207.0" />
                             </children>
                         </AnchorPane>
                         <AnchorPane>

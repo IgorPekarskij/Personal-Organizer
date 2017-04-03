@@ -16,6 +16,8 @@ public class CreateNewTaskController {
     private String minutesDefault = "Минуты";
     private String hoursDefaultValue = "00";
     private String minutesDefaultValue = "00";
+    private String alertHeader = "Заполните имя задачи!";
+    private String alertMessage = "Имя задачи не может быть пустым!";
     @FXML
     private CheckBox completedTaskCheckBox;
     @FXML
@@ -96,14 +98,14 @@ public class CreateNewTaskController {
     }
 
     public void clearNewTaskFields() {
-        newTaskStartHour.setText("Часы");
-        newTaskStartMin.setText("Минуты");
-        newTaskEndHour.setText("Часы");
-        newTaskEndMin.setText("Минуты");
+        newTaskStartHour.setText(hoursDefault);
+        newTaskStartMin.setText(minutesDefault);
+        newTaskEndHour.setText(hoursDefault);
+        newTaskEndMin.setText(minutesDefault);
         newTaskStartDate.setValue(null);
         newTaskEndDate.setValue(null);
-        newTaskNameField.setText("");
-        newTaskDetailTextArea.setText("");
+        newTaskNameField.setText(ContactsWindowController.getEmptyString());
+        newTaskDetailTextArea.setText(ContactsWindowController.getEmptyString());
         newTaskAttacheImageView.setImage(null);
         completedTaskCheckBox.setSelected(false);
     }
@@ -115,10 +117,10 @@ public class CreateNewTaskController {
     public void saveNewTask(ActionEvent actionEvent) {
         if (newTaskNameField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Органайзер");
+            alert.setTitle(LoginWindowController.getTitle());
             alert.getDialogPane().setPrefWidth(500);
-            alert.setHeaderText("Заполните имя задачи!");
-            alert.setContentText("Имя задачи не может быть пустым!");
+            alert.setHeaderText(alertHeader);
+            alert.setContentText(alertMessage);
             alert.showAndWait();
         } else {
             this.newTask.setName(newTaskNameField.getText());

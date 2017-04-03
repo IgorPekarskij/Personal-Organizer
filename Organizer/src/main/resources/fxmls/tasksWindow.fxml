@@ -54,7 +54,7 @@
             <center>
                 <AnchorPane>
                     <children>
-                        <TextField fx:id="searchTaskTextField" layoutX="101.0" layoutY="14.0" prefHeight="26.0" prefWidth="615.0" promptText="Введите текст для поиска" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="308.0" />
+                        <TextField fx:id="searchTaskTextField" layoutX="81.0" layoutY="14.0" prefHeight="26.0" prefWidth="615.0" promptText="Введите текст для поиска" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="328.0" />
                         <SplitPane dividerPositions="0.6438356164383562" layoutX="87.0" layoutY="58.0" prefHeight="764.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="58.0">
                             <items>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="663.0" prefWidth="724.0">
@@ -168,11 +168,13 @@
                                 </AnchorPane>
                             </items>
                         </SplitPane>
-                        <ImageView fitHeight="40.0" fitWidth="68.0" layoutX="41.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="40.0" fitWidth="68.0" layoutX="21.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../pictures/Zoom.png" />
                             </image>
                         </ImageView>
+                  <Label fx:id="taskLoadLabel" layoutX="682.0" layoutY="14.0" prefHeight="26.0" prefWidth="215.0" />
+                  <ImageView fx:id="taskSpinner" fitHeight="54.0" fitWidth="83.0" layoutX="917.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                 </AnchorPane>
             </center>

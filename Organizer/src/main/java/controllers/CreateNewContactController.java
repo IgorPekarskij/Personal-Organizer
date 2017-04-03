@@ -42,6 +42,8 @@ public class CreateNewContactController {
     @FXML
     private TextArea noteTextArea;
     private Contact newPerson;
+    private String errorSaveAlertHeader = "Заполните фамилию контакта!";
+    private String getErrorSaveAlertMessage = "Поле фамилия не может быть пустым!";
 
     private byte[] tempImage = null;
 
@@ -92,10 +94,10 @@ public class CreateNewContactController {
             clearFields();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Органайзер");
+            alert.setTitle(LoginWindowController.getTitle());
             alert.getDialogPane().setPrefWidth(500);
-            alert.setHeaderText("Заполните фамилию контакта!");
-            alert.setContentText("Поле фамилия не может быть пустым!");
+            alert.setHeaderText(errorSaveAlertHeader);
+            alert.setContentText(getErrorSaveAlertMessage);
             alert.showAndWait();
         }
     }
@@ -112,16 +114,16 @@ public class CreateNewContactController {
     }
 
     public void clearFields() {
-        surnameNewContactField.setText("");
-        nameNewContactField.setText("");
-        middlnameNewContactField.setText("");
-        phoneNewContactField.setText("");
-        emailNewContactField.setText("");
-        country.setText("");
-        city.setText("");
-        address.setText("");
+        surnameNewContactField.setText(ContactsWindowController.getEmptyString());
+        nameNewContactField.setText(ContactsWindowController.getEmptyString());
+        middlnameNewContactField.setText(ContactsWindowController.getEmptyString());
+        phoneNewContactField.setText(ContactsWindowController.getEmptyString());
+        emailNewContactField.setText(ContactsWindowController.getEmptyString());
+        country.setText(ContactsWindowController.getEmptyString());
+        city.setText(ContactsWindowController.getEmptyString());
+        address.setText(ContactsWindowController.getEmptyString());
         birthdayDataPicker.setValue(null);
-        noteTextArea.setText("");
+        noteTextArea.setText(ContactsWindowController.getEmptyString());
         personImage.setImage(null);
     }
 

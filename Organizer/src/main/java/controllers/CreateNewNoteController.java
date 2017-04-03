@@ -28,6 +28,8 @@ public class CreateNewNoteController {
     private Note newNote;
     private CreateNewContactController newContactController;
     private NotesWindowController notesWindowController;
+    private String errorSaveAlertHeader = "Заполните фамилию заметки!";
+    private String getErrorSaveAlertMessage = "Имя заметки не может быть пустым!";
 
     @FXML
     private void initialize() {
@@ -72,18 +74,18 @@ public class CreateNewNoteController {
             clearNewNoteFields(actionEvent);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Органайзер");
+            alert.setTitle(LoginWindowController.getTitle());
             alert.getDialogPane().setPrefWidth(500);
-            alert.setHeaderText("Заполните имя заметки!");
-            alert.setContentText("Имя заметки не может быть пустым!");
+            alert.setHeaderText(errorSaveAlertHeader);
+            alert.setContentText(getErrorSaveAlertMessage);
             alert.showAndWait();
         }
     }
 
     public void clearNewNoteFields(ActionEvent actionEvent) {
         newNoteAttacheImageView.setImage(null);
-        newNoteNameField.setText("");
-        newNoteDetailTextArea.setText("");
+        newNoteNameField.setText(ContactsWindowController.getEmptyString());
+        newNoteDetailTextArea.setText(ContactsWindowController.getEmptyString());
         newNoteDate.setValue(null);
     }
 

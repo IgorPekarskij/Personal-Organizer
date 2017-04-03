@@ -12,7 +12,7 @@ import java.util.List;
 public class CollectionTasks implements ITask {
 
     private static ObservableList<Task> taskList = FXCollections.observableArrayList();
-
+    private static String loadTaskTitle = "Задачи импортированы";
     public static int addTask(Task task) {
         int taskId = -1;
         Connection connection = Connections.getConnection();
@@ -150,11 +150,11 @@ public class CollectionTasks implements ITask {
     } catch (SQLException e) {
         e.printStackTrace();
     }
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Задачи импортированы");
-        alert.getDialogPane().setPrefWidth(500);
-        alert.setHeaderText("Загружено " + countTasks + " задач!");
-        alert.showAndWait();
+    Alert loadTask = new Alert(Alert.AlertType.INFORMATION);
+        loadTask.setTitle(loadTaskTitle);
+        loadTask.getDialogPane().setPrefWidth(500);
+        loadTask.setHeaderText("Загружено " + countTasks + " задач!");
+        loadTask.showAndWait();
         taskList.clear();
         fillTaskList();
 

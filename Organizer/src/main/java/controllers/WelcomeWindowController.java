@@ -59,7 +59,7 @@ public class WelcomeWindowController {
     public static void openNewWindow(Node button, Parent scene) throws IOException {
         Stage welcomeStage = (Stage) button.getScene().getWindow();
         Stage contactsStage = new Stage();
-        contactsStage.setTitle("Органайзер");
+        contactsStage.setTitle(LoginWindowController.getTitle());
         contactsStage.setScene(new Scene(scene));
         contactsStage.show();
         welcomeStage.close();

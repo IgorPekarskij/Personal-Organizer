@@ -21,6 +21,10 @@ public class CreateNewUserController {
     public Button cancelButton;
     @FXML
     public Button registerButton;
+    private String successRegistrationHeader = "Спасибо за регистрацию.";
+    private String successRegistrationMessage = "Для входа введите ваш логин и пароль!";
+    private String errorRegistrationHeader = "Заполните поле \"Ваше имя\"!";
+    private String errorRegistrationMessage = "Поле \"Ваше имя\" не может быть пустым!";
 
     public void backToLogin(ActionEvent event) {
         Stage newUserStage = (Stage) cancelButton.getScene().getWindow();
@@ -33,21 +37,21 @@ public class CreateNewUserController {
             DBUser dbUser = new DBUser(newUser);
             dbUser.updateUser();
             DBUser.setCurrentUser(newUser);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Органайзер");
-            alert.getDialogPane().setPrefWidth(500);
-            alert.setHeaderText("Спасибо за регистрацию.");
-            alert.setContentText("Для входа введите ваш логин и пароль!");
-            alert.showAndWait();
+            Alert successRegistration = new Alert(Alert.AlertType.INFORMATION);
+            successRegistration.setTitle(LoginWindowController.getTitle());
+            successRegistration.getDialogPane().setPrefWidth(500);
+            successRegistration.setHeaderText(successRegistrationHeader);
+            successRegistration.setContentText(successRegistrationMessage);
+            successRegistration.showAndWait();
             Stage newUserStage = (Stage) registerButton.getScene().getWindow();
             newUserStage.close();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Органайзер");
-            alert.getDialogPane().setPrefWidth(500);
-            alert.setHeaderText("Заполните поле \"Ваше имя\"!");
-            alert.setContentText("Поле \"Ваше имя\" не может быть пустым!");
-            alert.showAndWait();
+            Alert errorRegistration = new Alert(Alert.AlertType.ERROR);
+            errorRegistration.setTitle(LoginWindowController.getTitle());
+            errorRegistration.getDialogPane().setPrefWidth(500);
+            errorRegistration.setHeaderText(errorRegistrationHeader);
+            errorRegistration.setContentText(errorRegistrationMessage);
+            errorRegistration.showAndWait();
         }
     }
 }

@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -31,13 +32,29 @@ import java.util.List;
 
 public class ContactsWindowController {
 
-
     private Contact currentPerson;
     private Parent fxmlEdit;
     private FXMLLoader fxmlLoader;
     private CreateNewContactController createNewContact;
     private Stage editDialogStage;
+    private String importContactTitle = "Импортирование контактов";
+    private String exportContactTitle = "Экспорт контактов";
+    private String confirmationDeleteMessage = "Вы действительно хотите удалить контакт?";
+    private String confirmationDeleteTitle = "Удаление контакта!";
+    private String filesWithExtension = "*.vfc";
+    private String fileExtension = ".vfc";
+    private String chooseTaskMessage = "Выберите задачу!";
+    private static String confirmButtonLabel = "Да";
+    private static String declineButtonLabel = "Нет";
+    private static String emptyString = "";
+    private static String errorLoadAlertTitle = "Ошибка загрузки";
+    private static String errorLoadAlertMessage = "Во время загрузки произошла ошибка!";
+    private static String foundedRecords = "Найдено %s записей";
     private static boolean addPerson = true;
+    @FXML
+    private ImageView loadContactsSpinner;
+    @FXML
+    private Label loadContactsLabel;
     @FXML
     private MenuItem expSelectedContact;
     @FXML
@@ -180,29 +197,53 @@ public class ContactsWindowController {
         }
     }
 
+    public static String getConfirmButtonLabel() {
+        return confirmButtonLabel;
+    }
+
+    public static String getDeclineButtonLabel() {
+        return declineButtonLabel;
+    }
+
+    public static String getEmptyString() {
+        return emptyString;
+    }
+
+    public static String getErrorLoadAlertTitle() {
+        return errorLoadAlertTitle;
+    }
+
+    public static String getErrorLoadAlertMessage() {
+        return errorLoadAlertMessage;
+    }
+
+    public static String getFoundedRecords() {
+        return foundedRecords;
+    }
+
     public void deleteContact(ActionEvent event) {
         int rowNumber = listOfContact.getSelectionModel().getSelectedIndex();
         if (rowNumber < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Органайзер");
+            alert.setTitle(LoginWindowController.getTitle());
             alert.getDialogPane().setPrefWidth(500);
-            alert.setHeaderText("Выберите задачу!");
+            alert.setHeaderText(chooseTaskMessage);
             alert.showAndWait();
         } else {
-            ButtonType ok = new ButtonType("Да", ButtonBar.ButtonData.YES);
-            ButtonType no = new ButtonType("Нет", ButtonBar.ButtonData.NO);
-            Alert confirmExit = new Alert(Alert.AlertType.CONFIRMATION, "Вы действительно хотите удалить контакт?", ok, no);
-            confirmExit.setHeaderText("");
-            confirmExit.setTitle("Удаление контакта!");
-            confirmExit.showAndWait();
-            if (confirmExit.getResult() == ok) {
+            ButtonType ok = new ButtonType(confirmButtonLabel, ButtonBar.ButtonData.YES);
+            ButtonType no = new ButtonType(declineButtonLabel, ButtonBar.ButtonData.NO);
+            Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION, confirmationDeleteMessage, ok, no);
+            confirmDelete.setHeaderText(emptyString);
+            confirmDelete.setTitle(confirmationDeleteTitle);
+            confirmDelete.showAndWait();
+            if (confirmDelete.getResult() == ok) {
                 CollectionContacts.deleteContact((Contact) listOfContact.getSelectionModel().getSelectedItem());
-                fioCurrentContact.setText(" ");
-                telephoneCurrentContact.setText("");
-                emailCurrentContact.setText("");
-                birthdayCurrentContact.setText("");
-                addressCurrentContact.setText("");
-                noteCurrentContact.setText("");
+                fioCurrentContact.setText(emptyString);
+                telephoneCurrentContact.setText(emptyString);
+                emailCurrentContact.setText(emptyString);
+                birthdayCurrentContact.setText(emptyString);
+                addressCurrentContact.setText(emptyString);
+                noteCurrentContact.setText(emptyString);
                 contactImage.setImage(null);
             }
             listOfContact.refresh();
@@ -211,13 +252,13 @@ public class ContactsWindowController {
     }
 
     private void updateCountLabel() {
-        countFoundRecords.textProperty().bind(Bindings.size(listOfContact.getItems()).asString("Найдено %s записей"));
+        countFoundRecords.textProperty().bind(Bindings.size(listOfContact.getItems()).asString(foundedRecords));
     }
 
     public Stage showWindow(Stage stage, TableView tableView, Parent fxmlEdit) {
         if (stage == null) {
             stage = new Stage();
-            stage.setTitle("Органайзер");
+            stage.setTitle(LoginWindowController.getTitle());
             stage.setResizable(true);
             stage.setScene(new Scene(fxmlEdit));
             stage.initModality(Modality.WINDOW_MODAL);
@@ -266,25 +307,33 @@ public class ContactsWindowController {
         impContacts.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent arg0) {
+                loadContactsLabel.setText(importContactTitle);
+                loadContactsSpinner.setImage(new Image(CollectionContacts.class.getResource("/pictures/spinner.gif").toExternalForm()));
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save Contacts");
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VCF files (*.vcf)", "*.vcf");
+                fileChooser.setTitle(importContactTitle);
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VCF files (" + filesWithExtension + ")", filesWithExtension);
                 fileChooser.getExtensionFilters().add(extFilter);
                 File file = fileChooser.showOpenDialog(listOfContact.getScene().getWindow());
                 if (file != null) {
                     try {
+
                         List<VCard> vcards = Ezvcard.parse(file).all();
                         CollectionContacts.addContact(generateContactsList(vcards));
+                        loadContactsLabel.setText(emptyString);
+                        loadContactsSpinner.setImage(null);
                     } catch (RuntimeException ex) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Ошибка загрузки");
+                        alert.setTitle(errorLoadAlertTitle);
                         alert.getDialogPane().setPrefWidth(500);
-                        alert.setHeaderText("Проверьте формат файла");
+                        alert.setHeaderText(errorLoadAlertMessage);
                         alert.showAndWait();
                         ex.printStackTrace();
                     } catch (IOException e) {
 
                     }
+                } else {
+                    loadContactsLabel.setText(emptyString);
+                    loadContactsSpinner.setImage(null);
                 }
             }
         });
@@ -296,8 +345,8 @@ public class ContactsWindowController {
             @Override
             public void handle(ActionEvent arg0) {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save Contacts");
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VCF files (*.vcf)", "*.vcf");
+                fileChooser.setTitle(exportContactTitle);
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VCF files (" + filesWithExtension + ")", filesWithExtension);
                 fileChooser.getExtensionFilters().add(extFilter);
                 File file = fileChooser.showSaveDialog(listOfContact.getScene().getWindow());
                 if (file != null) {
@@ -305,8 +354,8 @@ public class ContactsWindowController {
                     for (Contact item: CollectionContacts.getPersonsList()) {
                         vcards.add(VcardFactory.createVcard(item));
                     }
-                    if (!file.getName().endsWith(".vcf")) {
-                        file = new File(file.getAbsolutePath() + ".vcf");
+                    if (!file.getName().endsWith(fileExtension)) {
+                        file = new File(file.getAbsolutePath() + fileExtension);
                     }
                     try {
                         Ezvcard.write(vcards).go(file);
@@ -331,15 +380,15 @@ public class ContactsWindowController {
             }
             contactsList.add(contacts);
         } else {
-            int preferedSize = 0;
+            int preferredSize = 0;
             for (int j = 0; j < cards.size(); j++) {
                 contact = VcardFactory.parseVcard(cards.get(j));
                 if (contact != null) {
                     contacts.add(contact);
                 }
-                if (++preferedSize >= 1000) {
+                if (++preferredSize >= 1000) {
                     contactsList.add(contacts);
-                    preferedSize = 0;
+                    preferredSize = 0;
                 }
             }
         }
@@ -351,14 +400,14 @@ public class ContactsWindowController {
             @Override
             public void handle(ActionEvent arg0) {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save Contacts");
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VCF files (*.vcf)", "*.vcf");
+                fileChooser.setTitle(exportContactTitle);
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("VCF files (" + filesWithExtension + ")", filesWithExtension);
                 fileChooser.getExtensionFilters().add(extFilter);
                 File file = fileChooser.showSaveDialog(listOfContact.getScene().getWindow());
                 if (file != null) {
                     VCard vcards = VcardFactory.createVcard((Contact) listOfContact.getSelectionModel().getSelectedItem());
-                    if (!file.getName().endsWith(".vcf")) {
-                        file = new File(file.getAbsolutePath() + ".vcf");
+                    if (!file.getName().endsWith(fileExtension)) {
+                        file = new File(file.getAbsolutePath() + fileExtension);
                     }
                     try {
                         Ezvcard.write(vcards).go(file);

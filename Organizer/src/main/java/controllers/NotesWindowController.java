@@ -25,6 +25,9 @@ public class NotesWindowController {
     private CreateNewNoteController createNewNote;
     private Stage editNoteStage;
     private static boolean addNote = true;
+    private String confirmDeleteTitle = "Удаление заметки!";
+    private String confirmDeleteMessage = "Удаление заметки!";
+    private String errorDeleteTitle = "Выберите заметку!";
     @FXML
     private DatePicker selectNoteFromDatePicker;
     @FXML
@@ -148,25 +151,25 @@ public class NotesWindowController {
         int rowNumber = listOfNotes.getSelectionModel().getSelectedIndex();
         if (rowNumber < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Органайзер");
+            alert.setTitle(LoginWindowController.getTitle());
             alert.getDialogPane().setPrefWidth(500);
-            alert.setHeaderText("Выберите задачу!");
+            alert.setHeaderText(errorDeleteTitle);
             alert.showAndWait();
         } else {
-            ButtonType ok = new ButtonType("Да", ButtonBar.ButtonData.YES);
-            ButtonType no = new ButtonType("Нет", ButtonBar.ButtonData.NO);
-            Alert confirmExit = new Alert(Alert.AlertType.CONFIRMATION, "Вы действительно хотите удалить заметку?", ok, no);
-            confirmExit.setHeaderText("");
-            confirmExit.setTitle("Удаление заметки!");
-            confirmExit.showAndWait();
-            if (confirmExit.getResult() == ok) {
+            ButtonType ok = new ButtonType(ContactsWindowController.getConfirmButtonLabel(), ButtonBar.ButtonData.YES);
+            ButtonType no = new ButtonType(ContactsWindowController.getDeclineButtonLabel(), ButtonBar.ButtonData.NO);
+            Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION, confirmDeleteMessage, ok, no);
+            confirmDelete.setHeaderText("");
+            confirmDelete.setTitle(confirmDeleteTitle);
+            confirmDelete.showAndWait();
+            if (confirmDelete.getResult() == ok) {
                 CollectionNotes.deleteNote((Note) listOfNotes.getSelectionModel().getSelectedItem());
             }
         }
     }
 
     private void updateCountLabel() {
-        countNotes.textProperty().bind(Bindings.size(listOfNotes.getItems()).asString("Найдено %s записей"));
+        countNotes.textProperty().bind(Bindings.size(listOfNotes.getItems()).asString(ContactsWindowController.getFoundedRecords()));
     }
 
     public static void setAddNote(boolean addNote) {

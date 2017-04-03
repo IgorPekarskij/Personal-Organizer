@@ -18,6 +18,7 @@ import javafx.stage.WindowEvent;
 import java.io.IOException;
 
 public class LoginWindowController {
+    private static String title = "Органайзер";
     private static DBUser user;
     @FXML
     private TextField loginField;
@@ -69,7 +70,7 @@ public class LoginWindowController {
             openWelcomeWindow(welcomeScene, enterButton);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Органайзер");
+            alert.setTitle(title);
             alert.setHeaderText("Неверный логин или пароль");
             alert.getDialogPane().setPrefWidth(500);
             alert.setContentText("Введите верные учетные данные!");
@@ -92,7 +93,7 @@ public class LoginWindowController {
     public static void openWelcomeWindow(Parent parent, Node node) {
         Stage loginStage = (Stage) node.getScene().getWindow();
         Stage root = new Stage();
-        root.setTitle("Органайзер");
+        root.setTitle(title);
         root.setResizable(false);
         root.setScene(new Scene(parent, 650, 465));
         root.show();
@@ -108,7 +109,7 @@ public class LoginWindowController {
 
     public static void changeUserWindow(Parent parent, Node node) {
         Stage newUser = new Stage();
-        newUser.setTitle("Органайзер");
+        newUser.setTitle(title);
         newUser.setResizable(false);
         newUser.initModality(Modality.WINDOW_MODAL);
         newUser.initOwner(node.getScene().getWindow());
@@ -118,6 +119,10 @@ public class LoginWindowController {
 
     public static DBUser getUser() {
         return user;
+    }
+
+    public static String getTitle() {
+        return title;
     }
 
     public static void setUser(DBUser user) {
