@@ -173,8 +173,8 @@
                                 <Image url="@../pictures/Zoom.png" />
                             </image>
                         </ImageView>
-                  <Label fx:id="taskLoadLabel" layoutX="682.0" layoutY="14.0" prefHeight="26.0" prefWidth="215.0" />
-                  <ImageView fx:id="taskSpinner" fitHeight="54.0" fitWidth="83.0" layoutX="917.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="taskLoadLabel" layoutX="682.0" layoutY="14.0" prefHeight="26.0" prefWidth="215.0" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="14.0" />
+                  <ImageView fx:id="taskSpinner" fitHeight="54.0" fitWidth="83.0" layoutX="884.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </center>

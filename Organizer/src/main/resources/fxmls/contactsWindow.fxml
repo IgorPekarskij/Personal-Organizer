@@ -57,14 +57,14 @@
                     <items>
                         <AnchorPane maxHeight="60.0" minHeight="60.0" minWidth="1000.0" prefHeight="60.0" prefWidth="1200.0" styleClass="background">
                             <children>
-                                <TextField fx:id="contactSearchField" layoutX="104.0" layoutY="19.0" prefHeight="25.0" prefWidth="780.0" promptText="Введите значение для поиска" AnchorPane.leftAnchor="104.0" AnchorPane.rightAnchor="314.0" />
-                                <ImageView fitHeight="40.0" fitWidth="68.0" layoutX="37.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="37.0">
+                                <TextField fx:id="contactSearchField" layoutX="71.0" layoutY="18.0" prefHeight="25.0" prefWidth="780.0" promptText="Введите значение для поиска" AnchorPane.leftAnchor="71.0" AnchorPane.rightAnchor="347.0" />
+                                <ImageView fitHeight="40.0" fitWidth="68.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0">
                                     <image>
                                         <Image url="@../pictures/Zoom.png" />
                                     </image>
                                 </ImageView>
-                        <ImageView fx:id="loadContactsSpinner" fitHeight="60.0" fitWidth="85.0" layoutX="901.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="loadContactsLabel" layoutX="694.0" layoutY="18.0" prefHeight="25.0" prefWidth="207.0" />
+                        <ImageView fx:id="loadContactsSpinner" fitHeight="60.0" fitWidth="85.0" layoutX="881.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="0.0" />
+                        <Label fx:id="loadContactsLabel" layoutX="674.0" layoutY="18.0" prefHeight="25.0" prefWidth="207.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="18.0" />
                             </children>
                         </AnchorPane>
                         <AnchorPane>
