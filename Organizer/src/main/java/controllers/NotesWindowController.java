@@ -26,7 +26,7 @@ public class NotesWindowController {
     private Stage editNoteStage;
     private static boolean addNote = true;
     private String confirmDeleteTitle = "Удаление заметки!";
-    private String confirmDeleteMessage = "Удаление заметки!";
+    private String confirmDeleteMessage = "Вы действительно хотите удалить заметку!";
     private String errorDeleteTitle = "Выберите заметку!";
     @FXML
     private DatePicker selectNoteFromDatePicker;
@@ -157,7 +157,7 @@ public class NotesWindowController {
             alert.showAndWait();
         } else {
             ButtonType ok = new ButtonType(ContactsWindowController.getConfirmButtonLabel(), ButtonBar.ButtonData.YES);
-            ButtonType no = new ButtonType(ContactsWindowController.getDeclineButtonLabel(), ButtonBar.ButtonData.NO);
+            ButtonType no = new ButtonType(ContactsWindowController.getCancelButtonLabel(), ButtonBar.ButtonData.NO);
             Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION, confirmDeleteMessage, ok, no);
             confirmDelete.setHeaderText("");
             confirmDelete.setTitle(confirmDeleteTitle);

@@ -1,9 +1,6 @@
 package start;
 
 import controllers.LoginWindowController;
-import interfaces.impls.CollectionContacts;
-import interfaces.impls.CollectionNotes;
-import interfaces.impls.CollectionTasks;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -17,14 +14,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        CollectionContacts collectionContacts = new CollectionContacts();
-        collectionContacts.fillContactList();
-        CollectionNotes collectionNotes = new CollectionNotes();
-        collectionNotes.fillNoteList();
-        CollectionTasks collectionTasks = new CollectionTasks();
-        collectionTasks.fillTaskList();
         Parent root = FXMLLoader.load(getClass().getResource("/fxmls/loginWindow.fxml"));
-        primaryStage.setTitle("Органайзер");
+        primaryStage.setTitle(LoginWindowController.getTitle());
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 500, 220));
         primaryStage.show();

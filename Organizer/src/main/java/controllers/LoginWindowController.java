@@ -1,5 +1,8 @@
 package controllers;
 
+import interfaces.impls.CollectionContacts;
+import interfaces.impls.CollectionNotes;
+import interfaces.impls.CollectionTasks;
 import interfaces.impls.DBUser;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +22,9 @@ import java.io.IOException;
 
 public class LoginWindowController {
     private static String title = "Органайзер";
+    private static String confirmationTitle = "Подтверждение!";
+    private static String confirmationMessage = "Вы хотите закрыть приложение?";
+    private static String wrongCredentialHeader = "Неверный логин или пароль";
     private static DBUser user;
     @FXML
     private TextField loginField;
@@ -44,6 +50,8 @@ public class LoginWindowController {
 
     }
 
+
+
     private void hideRegistrationButton() {
         registerButton.setVisible(false);
         loginWindowButtonsPane.setPadding(new Insets(10, 10, 10, 110));
@@ -66,24 +74,29 @@ public class LoginWindowController {
 
     public void checkCredentials(ActionEvent event) throws IOException {
         if (loginField.getText().equals(DBUser.getCurrentUser().getLogin()) && passwordField.getText().equals(DBUser.getCurrentUser().getPassword())) {
+            CollectionContacts collectionContacts = new CollectionContacts();
+            collectionContacts.fillContactList();
+            CollectionNotes collectionNotes = new CollectionNotes();
+            collectionNotes.fillNoteList();
+            CollectionTasks collectionTasks = new CollectionTasks();
+            collectionTasks.fillTaskList();
             Parent welcomeScene = FXMLLoader.load(getClass().getResource("/fxmls/welcomeWindow.fxml"));
             openWelcomeWindow(welcomeScene, enterButton);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(title);
-            alert.setHeaderText("Неверный логин или пароль");
+            alert.setHeaderText(wrongCredentialHeader);
             alert.getDialogPane().setPrefWidth(500);
-            alert.setContentText("Введите верные учетные данные!");
             alert.showAndWait();
         }
     }
 
     public static void exitApplication() {
-        ButtonType ok = new ButtonType("Да", ButtonBar.ButtonData.YES);
-        ButtonType no = new ButtonType("Нет", ButtonBar.ButtonData.NO);
-        Alert confirmExit = new Alert(Alert.AlertType.CONFIRMATION, "Вы хотите закрыть приложение?", ok, no);
-        confirmExit.setHeaderText("");
-        confirmExit.setTitle("Подтверждение!");
+        ButtonType ok = new ButtonType(ContactsWindowController.getConfirmButtonLabel(), ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType(ContactsWindowController.getCancelButtonLabel(), ButtonBar.ButtonData.NO);
+        Alert confirmExit = new Alert(Alert.AlertType.CONFIRMATION, confirmationMessage, ok, no);
+        confirmExit.setHeaderText(ContactsWindowController.getEmptyString());
+        confirmExit.setTitle(confirmationTitle);
         confirmExit.showAndWait();
         if (confirmExit.getResult() == ok) {
             System.exit(0);

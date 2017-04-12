@@ -45,7 +45,7 @@ public class ContactsWindowController {
     private String fileExtension = ".vcf";
     private String chooseTaskMessage = "Выберите задачу!";
     private static String confirmButtonLabel = "Да";
-    private static String declineButtonLabel = "Нет";
+    private static String cancelButtonLabel = "Нет";
     private static String emptyString = "";
     private static String errorLoadAlertTitle = "Ошибка загрузки";
     private static String errorLoadAlertMessage = "Во время загрузки произошла ошибка!";
@@ -201,8 +201,8 @@ public class ContactsWindowController {
         return confirmButtonLabel;
     }
 
-    public static String getDeclineButtonLabel() {
-        return declineButtonLabel;
+    public static String getCancelButtonLabel() {
+        return cancelButtonLabel;
     }
 
     public static String getEmptyString() {
@@ -231,7 +231,7 @@ public class ContactsWindowController {
             alert.showAndWait();
         } else {
             ButtonType ok = new ButtonType(confirmButtonLabel, ButtonBar.ButtonData.YES);
-            ButtonType no = new ButtonType(declineButtonLabel, ButtonBar.ButtonData.NO);
+            ButtonType no = new ButtonType(cancelButtonLabel, ButtonBar.ButtonData.NO);
             Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION, confirmationDeleteMessage, ok, no);
             confirmDelete.setHeaderText(emptyString);
             confirmDelete.setTitle(confirmationDeleteTitle);
@@ -263,12 +263,6 @@ public class ContactsWindowController {
             stage.setScene(new Scene(fxmlEdit));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(tableView.getParent().getScene().getWindow());
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    event.consume();
-                }
-            });
         }
         stage.showAndWait();
         return stage;
