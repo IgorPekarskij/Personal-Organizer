@@ -256,7 +256,7 @@ public class TaskWindowController {
             alert.showAndWait();
         } else {
             ButtonType ok = new ButtonType(ContactsWindowController.getConfirmButtonLabel(), ButtonBar.ButtonData.YES);
-            ButtonType no = new ButtonType(ContactsWindowController.getDeclineButtonLabel(), ButtonBar.ButtonData.NO);
+            ButtonType no = new ButtonType(ContactsWindowController.getCancelButtonLabel(), ButtonBar.ButtonData.NO);
             Alert confirmDelete = new Alert(Alert.AlertType.CONFIRMATION, confirmDeleteMessage, ok, no);
             confirmDelete.setTitle(confirmDeleteTitle);
             confirmDelete.showAndWait();
